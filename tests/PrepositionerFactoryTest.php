@@ -22,8 +22,8 @@ class PrepositionerFactoryTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-     * @expectedException Tomaj\Prepositioner\LanguageNotExistsException
-     */
+	 * @expectedException Tomaj\Prepositioner\LanguageNotExistsException
+	 */
 	public function testFactoryThrowExceptionOnUnknownLanguage()
 	{
 		$prepositioner = Factory::build('asfsdgsdgdsgf');
