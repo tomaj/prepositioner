@@ -22,7 +22,7 @@ $prepositioner = new Tomaj\Prepositioner\Prepositioner(array('one', 'two'));
 $prepositioner->formatText($inputText);
 ```
 
-This example replace all occurences of *'one'* or *'two'* strings in ```$inputText``` as *'one&nbsp;'* and *'two&nbsp;'*.
+This example replace all occurences of *'one'* or *'two'* strings in ```$inputText``` as *'one&amp;nbsp;'* and *'two&amp;nbsp;'*.
 
 For using with *Factory* which contains language support try:
 
