@@ -3,6 +3,9 @@ Prepositioner
 
 PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 
+[![Build Status](https://secure.travis-ci.org/tomaj/prepositioner.png)](http://travis-ci.org/tomaj/prepositioner)
+
+
 Instalation
 -----------
 
