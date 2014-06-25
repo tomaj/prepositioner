@@ -4,59 +4,59 @@ namespace Tomaj\Prepositioner;
 
 class SlovakLanguage extends LanguageInterface
 {
-	public function prepositions()
-	{
-		return array(
-			/* 1 letter */
-			'a',
-			'i',
-			'k',
-			'o',
-			'v',
-			'u',
-			'z',
-			's',
+    public function prepositions()
+    {
+        return array(
+            /* 1 letter */
+            'a',
+            'i',
+            'k',
+            'o',
+            'v',
+            'u',
+            'z',
+            's',
 
-			/* 2 letter */
-			'do',
-			'od',
-			'zo',
-			'ku',
-			'na',
-			'po',
-			'so',
-			'za',
-			'vo',
+            /* 2 letter */
+            'do',
+            'od',
+            'zo',
+            'ku',
+            'na',
+            'po',
+            'so',
+            'za',
+            'vo',
 
-			/* 3 letter */
-			'cez',
-			'pre',
-			'nad',
-			'pod',
-			'pri',
+            /* 3 letter */
+            'cez',
+            'pre',
+            'nad',
+            'pod',
+            'pri',
 
-			/* 4 letter */
-			'spod',
-			'niže',
-			'voči',
-			'pred',
+            /* 4 letter */
+            'spod',
+            'niže',
+            'voči',
+            'pred',
 
-			/* 5 letter */
-			'podľa',
-			'proti',
-			'kvôli',
-			'medzi',
-			'popri',
+            /* 5 letter */
+            'podľa',
+            'proti',
+            'kvôli',
+            'medzi',
+            'popri',
 
-			/* 6 letter */
-			'sponad',
-			'naproti',
+            /* 6 letter */
+            'sponad',
+            'naproti',
 
-			/* more */
-			'spomedzi',
-			'prostred',
-			'vrátane',
-			'napriek',
-		);
-	}
+            /* more */
+            'spomedzi',
+            'prostred',
+            'vrátane',
+            'napriek',
+        );
+    }
 }

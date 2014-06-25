@@ -7,25 +7,25 @@ use Tomaj\Prepositioner\LanguageInterface;
 
 class TestLanguage implements LanguageInterface
 {
-	public function prepositions()
-	{
-		return array('a', 'b');
-	}
+    public function prepositions()
+    {
+        return array('a', 'b');
+    }
 }
 
 class PrepositionerFactoryTest extends PHPUnit_Framework_TestCase
 {
-	public function testCreatePrepositioner()
-	{
-		$prepositioner = Factory::build('test');
-		$this->assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
-	}
+    public function testCreatePrepositioner()
+    {
+        $prepositioner = Factory::build('test');
+        $this->assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
+    }
 
-	/**
-	 * @expectedException Tomaj\Prepositioner\LanguageNotExistsException
-	 */
-	public function testFactoryThrowExceptionOnUnknownLanguage()
-	{
-		$prepositioner = Factory::build('asfsdgsdgdsgf');
-	}
+    /**
+     * @expectedException Tomaj\Prepositioner\LanguageNotExistsException
+     */
+    public function testFactoryThrowExceptionOnUnknownLanguage()
+    {
+        $prepositioner = Factory::build('asfsdgsdgdsgf');
+    }
 }

@@ -4,5 +4,5 @@ namespace Tomaj\Prepositioner;
 
 interface LanguageInterface
 {
-	public function prepositions();
+    public function prepositions();
 }
