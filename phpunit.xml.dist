@@ -4,6 +4,11 @@
 	<logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
+    <filter>
+        <blacklist>
+            <file>systemlib.phpreflection_hni</file>
+        </blacklist>
+    </filter>
     <testsuites>
         <testsuite name="Prepositioner test suite">
             <directory>./tests/</directory>
