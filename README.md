@@ -4,8 +4,12 @@ Prepositioner
 PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 
 [![Build Status](https://secure.travis-ci.org/tomaj/prepositioner.png)](http://travis-ci.org/tomaj/prepositioner)
+[![Coverage Status](https://coveralls.io/repos/tomaj/prepositioner/badge.png?branch=master)](https://coveralls.io/r/tomaj/prepositioner?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/53aa865ed043f9a33a00000b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53aa865ed043f9a33a00000b)
 
-[![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner) [![Latest Unstable Version](https://poser.pugx.org/tomaj/prepositioner/v/unstable.svg)](https://packagist.org/packages/tomaj/prepositioner) [![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
+[![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner)
+[![Latest Unstable Version](https://poser.pugx.org/tomaj/prepositioner/v/unstable.svg)](https://packagist.org/packages/tomaj/prepositioner)
+[![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
 
 
 Instalation
