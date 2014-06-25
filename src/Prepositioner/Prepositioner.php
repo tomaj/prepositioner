@@ -6,7 +6,7 @@ class Prepositioner
 {
 	private $prepositionsArray = array();
 
-	private $space = "&nbps;";
+	private $spaceCharacter = "&nbsp;";
 
 	public function __construct($prepositionsArray)
 	{
@@ -22,7 +22,7 @@ class Prepositioner
 		$prepositions = implode('|', $this->prepositionsArray);
 
 		$pattern = "#(\s|^)({$prepositions})\s+(?=[^>]*(<|$))#i";
-		$replacement = "$1$2&nbsp;";
+		$replacement = "$1$2{$this->spaceCharacter}";
 
 		$text = preg_replace($pattern, $replacement, $text);
 		return $text;
