@@ -26,6 +26,7 @@ class SlovakLanguage extends LanguageInterface
 			'po',
 			'so',
 			'za',
+			'vo',
 
 			/* 3 letter */
 			'cez',
