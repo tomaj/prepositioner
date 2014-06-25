@@ -5,6 +5,8 @@ PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 
 [![Build Status](https://secure.travis-ci.org/tomaj/prepositioner.png)](http://travis-ci.org/tomaj/prepositioner)
 
+[![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner) [![Latest Unstable Version](https://poser.pugx.org/tomaj/prepositioner/v/unstable.svg)](https://packagist.org/packages/tomaj/prepositioner) [![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
+
 
 Instalation
 -----------
