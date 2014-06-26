@@ -1,17 +1,10 @@
 <?php
 
-require dirname(__FILE__). '/../vendor/autoload.php';
+require dirname(__FILE__) . '/../vendor/autoload.php';
+require dirname(__FILE__) . '/TestLanguage.php';
 
 use Tomaj\Prepositioner\Factory;
 use Tomaj\Prepositioner\LanguageInterface;
-
-class TestLanguage implements LanguageInterface
-{
-    public function prepositions()
-    {
-        return array('a', 'b');
-    }
-}
 
 class PrepositionerFactoryTest extends PHPUnit_Framework_TestCase
 {
