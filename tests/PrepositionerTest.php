@@ -91,4 +91,12 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $input = "asd\t\ta\tx \na asdcdcd a<br/>asd";
         $this->assertEquals("asd\t\ta&nbsp;x \na&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
     }
+
+    public function testFirstWordInTag()
+    {
+        $words = array('a');
+        $prepositioner = new Prepositioner($words);
+        $input = "<p>a bout</p>";
+        $this->assertEquals("<p>a&nbsp;bout</p>", $prepositioner->formatText($input));
+    }
 }
