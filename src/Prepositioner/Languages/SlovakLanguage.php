@@ -27,6 +27,7 @@ class SlovakLanguage implements LanguageInterface
             'so',
             'za',
             'vo',
+            'či',
 
             /* 3 letter */
             'cez',
@@ -41,7 +42,7 @@ class SlovakLanguage implements LanguageInterface
             'voči',
             'pred',
             'skrz',
-            
+
 
             /* 5 letter */
             'podľa',
