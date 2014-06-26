@@ -40,6 +40,8 @@ class SlovakLanguage implements LanguageInterface
             'niže',
             'voči',
             'pred',
+            'skrz',
+            
 
             /* 5 letter */
             'podľa',
@@ -47,6 +49,8 @@ class SlovakLanguage implements LanguageInterface
             'kvôli',
             'medzi',
             'popri',
+            'okolo',
+            'popod',
 
             /* 6 letter */
             'sponad',
