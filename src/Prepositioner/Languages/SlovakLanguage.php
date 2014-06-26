@@ -2,7 +2,7 @@
 
 namespace Tomaj\Prepositioner;
 
-class SlovakLanguage extends LanguageInterface
+class SlovakLanguage implements LanguageInterface
 {
     public function prepositions()
     {
