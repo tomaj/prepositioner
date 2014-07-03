@@ -8,9 +8,12 @@ class Prepositioner
 
     private $spaceCharacter = "&nbsp;";
 
-    public function __construct($prepositionsArray)
+    private $escapeString;
+
+    public function __construct($prepositionsArray, $escapeString = '#####')
     {
         $this->prepositionsArray = $prepositionsArray;
+        $this->escapeString = $escapeString;
     }
 
     public function formatText($text)
@@ -25,6 +28,10 @@ class Prepositioner
         $replacement = "$1$2{$this->spaceCharacter}";
 
         $text = preg_replace($pattern, $replacement, $text);
+
+        $pattern = "/{$this->escapeString}({$prepositions}){$this->escapeString}/i";
+        $text = preg_replace($pattern, "$1", $text);
+
         return $text;
     }
 }

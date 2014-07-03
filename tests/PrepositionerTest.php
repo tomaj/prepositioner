@@ -99,4 +99,13 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $input = "<p>a bout</p>";
         $this->assertEquals("<p>a&nbsp;bout</p>", $prepositioner->formatText($input));
     }
+
+    public function testDisablePrepositionsReplace()
+    {
+        $words = array('a', 'b');
+        $prepositioner = new Prepositioner($words, '#####');
+        $input = "asd #####a##### asdsa b cc a asd s b";
+        $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));   
+    }
+
 }
