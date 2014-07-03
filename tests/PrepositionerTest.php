@@ -108,4 +108,19 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));   
     }
 
+    public function testMorePreposition()
+    {
+        $words = array('a', 'b', 'c');
+        $prepositioner = new Prepositioner($words);
+        $input = "asd a c b asd b c";
+        $this->assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));   
+    }
+
+    public function testMultiplePreposition()
+    {
+        $words = array('a', 'b', 'c');
+        $prepositioner = new Prepositioner($words);
+        $input = "a b c a b b c";
+        $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));   
+    }
 }
