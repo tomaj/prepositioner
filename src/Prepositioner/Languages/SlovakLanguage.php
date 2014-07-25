@@ -38,30 +38,8 @@ class SlovakLanguage implements LanguageInterface
 
             /* 4 letter */
             'spod',
-            'niže',
-            'voči',
             'pred',
             'skrz',
-
-
-            /* 5 letter */
-            'podľa',
-            'proti',
-            'kvôli',
-            'medzi',
-            'popri',
-            'okolo',
-            'popod',
-
-            /* 6 letter */
-            'sponad',
-            'naproti',
-
-            /* more */
-            'spomedzi',
-            'prostred',
-            'vrátane',
-            'napriek',
         );
     }
 }
