@@ -17,7 +17,7 @@ Instalation
 
 Install package via composer:
 
-```
+``` bash
 $ composer require tomaj/prepositioner
 ```
 
@@ -26,7 +26,7 @@ Usage
 
 Simple usage without *Factory* is very simple:
 
-```
+``` php
 $prepositioner = new Tomaj\Prepositioner\Prepositioner(array('one', 'two'));
 $prepositioner->formatText($inputText);
 ```
@@ -35,7 +35,7 @@ This example replace all occurences of *'one'* or *'two'* strings in ```$inputTe
 
 For using with *Factory* which contains language support try:
 
-```
+``` php
 $prepositioner = Tomaj\Prepositioner\Factory::build('slovak')
 $prepositioner->formatText($inputText);
 ```
