@@ -12,6 +12,7 @@ PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 [![Latest Unstable Version](https://poser.pugx.org/tomaj/prepositioner/v/unstable.svg)](https://packagist.org/packages/tomaj/prepositioner)
 [![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/02301f01-c9e9-4a73-9fdb-40a9170c3042/big.png)](https://insight.sensiolabs.com/projects/02301f01-c9e9-4a73-9fdb-40a9170c3042)
 
 Instalation
 -----------
