@@ -4,7 +4,7 @@ namespace Tomaj\Prepositioner;
 
 class Factory
 {
-    public static function build($language, $escapeString = '#####')
+    public static function build(string $language, string $escapeString = '#####'): Prepositioner
     {
         $className = '\Tomaj\Prepositioner\\' . ucfirst($language) . 'Language';
         if (class_exists($className)) {

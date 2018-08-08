@@ -4,19 +4,19 @@ namespace Tomaj\Prepositioner;
 
 class Prepositioner
 {
-    private $prepositionsArray = array();
+    private $prepositionsArray = [];
 
     private $spaceCharacter = "&nbsp;";
 
     private $escapeString;
 
-    public function __construct($prepositionsArray, $escapeString = '#####')
+    public function __construct(array $prepositionsArray, string $escapeString = '#####')
     {
         $this->prepositionsArray = $prepositionsArray;
         $this->escapeString = $escapeString;
     }
 
-    public function formatText($text)
+    public function formatText(string $text)
     {
         if (empty($this->prepositionsArray)) {
             return $text;
