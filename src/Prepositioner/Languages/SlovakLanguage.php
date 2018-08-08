@@ -4,9 +4,9 @@ namespace Tomaj\Prepositioner;
 
 class SlovakLanguage implements LanguageInterface
 {
-    public function prepositions()
+    public function prepositions(): array
     {
-        return array(
+        return [
             /* 1 letter */
             'a',
             'i',
@@ -40,6 +40,6 @@ class SlovakLanguage implements LanguageInterface
             'spod',
             'pred',
             'skrz',
-        );
+        ];
     }
 }

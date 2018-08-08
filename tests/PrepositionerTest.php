@@ -8,7 +8,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 {
     public function testBasicFormat()
     {
-        $words = array('a', 'asdf', 'vd');
+        $words = ['a', 'asdf', 'vd'];
         $prepositioner = new Prepositioner($words);
         $input = "dsfoihdf s asd a sdfds asdf asd";
         $this->assertEquals("dsfoihdf s asd a&nbsp;sdfds asdf&nbsp;asd", $prepositioner->formatText($input));
@@ -16,7 +16,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testInWordReplace()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "dsfdsfa dfsdg";
         $this->assertEquals("dsfdsfa dfsdg", $prepositioner->formatText($input));
@@ -24,7 +24,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testFirstWord()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "a asfs a asfd";
         $this->assertEquals("a&nbsp;asfs a&nbsp;asfd", $prepositioner->formatText($input));
@@ -32,7 +32,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testLastWord()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asfd a";
         $this->assertEquals("asfd a", $prepositioner->formatText($input));    
@@ -40,7 +40,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testSimplePreposition()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "a";
         $this->assertEquals("a", $prepositioner->formatText($input));        
@@ -48,7 +48,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testUpperLowerCase()
     {
-        $words = array('a', 'AsD', 'C', 'EE');
+        $words = ['a', 'AsD', 'C', 'EE'];
         $prepositioner = new Prepositioner($words);
         $input = "A acd asd fef c xxx Ee grgr";
         $this->assertEquals("A&nbsp;acd asd&nbsp;fef c&nbsp;xxx Ee&nbsp;grgr", $prepositioner->formatText($input));
@@ -56,7 +56,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testMultipleSpaces()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a   asd";
         $this->assertEquals("asd a&nbsp;asd", $prepositioner->formatText($input));
@@ -64,7 +64,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testHtmlTextElementReplace()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a fs <a>sa a sd</a>";
         $this->assertEquals("asd a&nbsp;fs <a>sa a&nbsp;sd</a>", $prepositioner->formatText($input));
@@ -72,7 +72,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
     
     public function testHtmlContentDoesntReplace()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a fs <p a sad>sdasd</p>";
         $this->assertEquals("asd a&nbsp;fs <p a sad>sdasd</p>", $prepositioner->formatText($input));
@@ -83,7 +83,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testSpecialCharacters()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a\t\tx a\nasdcdcd a<br/>asd";
         $this->assertEquals("asd a&nbsp;x a&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
@@ -94,7 +94,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testFirstWordInTag()
     {
-        $words = array('a');
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "<p>a bout</p>";
         $this->assertEquals("<p>a&nbsp;bout</p>", $prepositioner->formatText($input));
@@ -102,7 +102,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testDisablePrepositionsReplace()
     {
-        $words = array('a', 'b');
+        $words = ['a', 'b'];
         $prepositioner = new Prepositioner($words, '#####');
         $input = "asd #####a##### asdsa b cc a asd s b";
         $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));   
@@ -110,7 +110,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testMorePreposition()
     {
-        $words = array('a', 'b', 'c');
+        $words = ['a', 'b', 'c'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a c b asd b c";
         $this->assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));   
@@ -118,7 +118,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
 
     public function testMultiplePreposition()
     {
-        $words = array('a', 'b', 'c');
+        $words = ['a', 'b', 'c'];
         $prepositioner = new Prepositioner($words);
         $input = "a b c a b b c";
         $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));   
