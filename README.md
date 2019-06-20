@@ -29,7 +29,7 @@ Usage
 Simple usage without *Factory* is very simple:
 
 ``` php
-$prepositioner = new Tomaj\Prepositioner\Prepositioner(array('one', 'two'));
+$prepositioner = new Tomaj\Prepositioner\Prepositioner(['one', 'two']);
 $prepositioner->formatText($inputText);
 ```
 
