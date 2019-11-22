@@ -4,6 +4,7 @@ namespace Tomaj\Prepositioner;
 
 class Prepositioner
 {
+    private $quotationMarkArray = ["\"", "'", "„", "‚", "“", "‘", "«", "‹"];
     private $prepositionsArray = [];
 
     private $spaceCharacter = "&nbsp;";
@@ -23,8 +24,9 @@ class Prepositioner
         }
 
         $prepositions = implode('|', $this->prepositionsArray);
+        $quotationMarks = implode('|', $this->quotationMarkArray);
 
-        $pattern = "#(\s|^|>|;)({$prepositions})\s+(?=[^>]*(<|$))#i";
+        $pattern = "#(\s|^|>|;|{$quotationMarks})({$prepositions})\s+(?=[^>]*(<|$))#i";
         $replacement = "$1$2{$this->spaceCharacter}";
 
         $text = preg_replace($pattern, $replacement, $text);

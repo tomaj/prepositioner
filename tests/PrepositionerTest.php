@@ -123,4 +123,20 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $input = "a b c a b b c";
         $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));   
     }
+
+    public function testPrepositionAfterStraightQuotationMark()
+    {
+        $words = ['on', 'to', 'the'];
+        $prepositioner = new Prepositioner($words);
+        $input = 'He said: "on to the hill, man"';
+        $this->assertEquals('He said: "on&nbsp;to&nbsp;the&nbsp;hill, man"', $prepositioner->formatText($input));   
+    }
+
+    public function testPrepositionAfterLeftDoubleQuotationMark()
+    {
+        $words = ['on', 'to', 'the'];
+        $prepositioner = new Prepositioner($words);
+        $input = 'He said: “on to the hill, man”';
+        $this->assertEquals('He said: “on&nbsp;to&nbsp;the&nbsp;hill, man”', $prepositioner->formatText($input));   
+    }
 }
