@@ -6,7 +6,6 @@ PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 [![Build Status](https://secure.travis-ci.org/tomaj/prepositioner.png)](http://travis-ci.org/tomaj/prepositioner)
 [![Code Climate](https://codeclimate.com/github/tomaj/prepositioner/badges/gpa.svg)](https://codeclimate.com/github/tomaj/prepositioner)
 [![Coverage Status](https://coveralls.io/repos/tomaj/prepositioner/badge.png?branch=master)](https://coveralls.io/r/tomaj/prepositioner?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/53aa865ed043f9a33a00000b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53aa865ed043f9a33a00000b)
 
 [![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner)
 [![Latest Unstable Version](https://poser.pugx.org/tomaj/prepositioner/v/unstable.svg)](https://packagist.org/packages/tomaj/prepositioner)
@@ -51,4 +50,4 @@ For new language support you need to implement new language class which implemen
 Known issue
 -----------
 
-1. each new language has to be in *Tomaj\Prepositioner* namespace
+1. each new language has to be in *Tomaj\Prepositioner\Language* namespace if you would like to use Factory

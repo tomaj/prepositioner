@@ -1,23 +1,22 @@
 <?php
 
-require dirname(__FILE__) . '/../vendor/autoload.php';
-require dirname(__FILE__) . '/TestLanguage.php';
+namespace Tomaj\Prepositioner\Tests;
 
 use Tomaj\Prepositioner\Factory;
+use Tomaj\Prepositioner\LanguageNotExistsException;
+use PHPUnit\Framework\TestCase;
 
-class PrepositionerFactoryTest extends PHPUnit_Framework_TestCase
+class PrepositionerFactoryTest extends TestCase
 {
     public function testCreatePrepositioner()
     {
-        $prepositioner = Factory::build('test');
+        $prepositioner = Factory::build('empty');
         $this->assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
     }
 
-    /**
-     * @expectedException Tomaj\Prepositioner\LanguageNotExistsException
-     */
     public function testFactoryThrowExceptionOnUnknownLanguage()
     {
+        $this->expectException(LanguageNotExistsException::class);
         $prepositioner = Factory::build('asfsdgsdgdsgf');
     }
 }

@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="vendor/autoload.php">
-	<logging>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
-    </logging>
-    <filter>
-        <blacklist>
-            <file>systemlib.phpreflection_hni</file>
-        </blacklist>
-    </filter>
-    <testsuites>
-        <testsuite name="Prepositioner test suite">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <report>
+      <clover outputFile="build/logs/clover.xml"/>
+    </report>
+  </coverage>
+  <logging/>
+  <testsuites>
+    <testsuite name="Prepositioner test suite">
+      <directory>./tests/</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
-

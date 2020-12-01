@@ -1,6 +1,6 @@
 <?php
 
-namespace Tomaj\Prepositioner;
+namespace Tomaj\Prepositioner\Language;
 
 class SlovakLanguage implements LanguageInterface
 {

@@ -1,10 +1,11 @@
 <?php
 
-require dirname(__FILE__). '/../vendor/autoload.php';
+namespace Tomaj\Prepositioner\Tests;
 
 use Tomaj\Prepositioner\Prepositioner;
+use PHPUnit\Framework\TestCase;
 
-class PrepositionerTest extends PHPUnit_Framework_TestCase
+class PrepositionerTest extends TestCase
 {
     public function testBasicFormat()
     {
@@ -35,7 +36,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asfd a";
-        $this->assertEquals("asfd a", $prepositioner->formatText($input));    
+        $this->assertEquals("asfd a", $prepositioner->formatText($input));
     }
 
     public function testSimplePreposition()
@@ -43,7 +44,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "a";
-        $this->assertEquals("a", $prepositioner->formatText($input));        
+        $this->assertEquals("a", $prepositioner->formatText($input));
     }
 
     public function testUpperLowerCase()
@@ -105,7 +106,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['a', 'b'];
         $prepositioner = new Prepositioner($words, '#####');
         $input = "asd #####a##### asdsa b cc a asd s b";
-        $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));   
+        $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));
     }
 
     public function testMorePreposition()
@@ -113,7 +114,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['a', 'b', 'c'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a c b asd b c";
-        $this->assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));   
+        $this->assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));
     }
 
     public function testMultiplePreposition()
@@ -121,7 +122,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['a', 'b', 'c'];
         $prepositioner = new Prepositioner($words);
         $input = "a b c a b b c";
-        $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));   
+        $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));
     }
 
     public function testPrepositionAfterStraightQuotationMark()
@@ -129,7 +130,7 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['on', 'to', 'the'];
         $prepositioner = new Prepositioner($words);
         $input = 'He said: "on to the hill, man"';
-        $this->assertEquals('He said: "on&nbsp;to&nbsp;the&nbsp;hill, man"', $prepositioner->formatText($input));   
+        $this->assertEquals('He said: "on&nbsp;to&nbsp;the&nbsp;hill, man"', $prepositioner->formatText($input));
     }
 
     public function testPrepositionAfterLeftDoubleQuotationMark()
@@ -137,6 +138,6 @@ class PrepositionerTest extends PHPUnit_Framework_TestCase
         $words = ['on', 'to', 'the'];
         $prepositioner = new Prepositioner($words);
         $input = 'He said: “on to the hill, man”';
-        $this->assertEquals('He said: “on&nbsp;to&nbsp;the&nbsp;hill, man”', $prepositioner->formatText($input));   
+        $this->assertEquals('He said: “on&nbsp;to&nbsp;the&nbsp;hill, man”', $prepositioner->formatText($input));
     }
 }
