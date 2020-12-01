@@ -3,15 +3,11 @@ Prepositioner
 
 PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 
-[![Build Status](https://secure.travis-ci.org/tomaj/prepositioner.png)](http://travis-ci.org/tomaj/prepositioner)
 [![Code Climate](https://codeclimate.com/github/tomaj/prepositioner/badges/gpa.svg)](https://codeclimate.com/github/tomaj/prepositioner)
-[![Coverage Status](https://coveralls.io/repos/tomaj/prepositioner/badge.png?branch=master)](https://coveralls.io/r/tomaj/prepositioner?branch=master)
-
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d82eb747d9ac33571be3/test_coverage)](https://codeclimate.com/github/tomaj/prepositioner/test_coverage)
 [![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner)
-[![Latest Unstable Version](https://poser.pugx.org/tomaj/prepositioner/v/unstable.svg)](https://packagist.org/packages/tomaj/prepositioner)
 [![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/02301f01-c9e9-4a73-9fdb-40a9170c3042/big.png)](https://insight.sensiolabs.com/projects/02301f01-c9e9-4a73-9fdb-40a9170c3042)
 
 Instalation
 -----------
