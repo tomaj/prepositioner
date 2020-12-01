@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tomaj\Prepositioner;
 
@@ -17,7 +18,7 @@ class Prepositioner
         $this->escapeString = $escapeString;
     }
 
-    public function formatText(string $text)
+    public function formatText(string $text): string
     {
         if (empty($this->prepositionsArray)) {
             return $text;

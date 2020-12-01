@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Tests;
 
@@ -13,13 +14,13 @@ use PHPUnit\Framework\TestCase;
  */
 class PrepositionerFactoryTest extends TestCase
 {
-    public function testCreatePrepositioner()
+    public function testCreatePrepositioner(): void
     {
         $prepositioner = Factory::build('empty');
         $this->assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
     }
 
-    public function testFactoryThrowExceptionOnUnknownLanguage()
+    public function testFactoryThrowExceptionOnUnknownLanguage(): void
     {
         $this->expectException(LanguageNotExistsException::class);
         $prepositioner = Factory::build('asfsdgsdgdsgf');

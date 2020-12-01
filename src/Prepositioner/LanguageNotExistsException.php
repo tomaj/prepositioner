@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Tomaj\Prepositioner;
 
-class LanguageNotExistsException extends \Exception
+use Exception;
+
+class LanguageNotExistsException extends Exception
 {
     
 }
