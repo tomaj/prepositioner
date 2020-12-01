@@ -5,6 +5,9 @@ namespace Tomaj\Prepositioner\Tests;
 use Tomaj\Prepositioner\Prepositioner;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Tomaj\Prepositioner\Prepositioner
+ */
 class PrepositionerTest extends TestCase
 {
     public function testBasicFormat()
