@@ -43,6 +43,15 @@ Extending
 For new language support you need to implement new language class which implements *LanguageInterface* with prepositions. See *SlovakLanguage* for details.
 
 
+Upgrade
+-------
+
+**From version 2 to 3**
+- Minimum php version is **7.3** from now
+- If you are using custom *Language* file from otside or from this repository (and don't use `Tomaj\Prepositioner\Factory`) you have to change namespace from `\Tomaj\Prepositioner\MyLanguage` to `\Tomaj\Prepositioner\Language\MyLanguage`
+- *Note:* new version includes `declare(strict_types=1);` in all files
+
+
 Known issue
 -----------
 
