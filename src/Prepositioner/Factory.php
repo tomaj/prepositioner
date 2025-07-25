@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Tomaj\Prepositioner;
 
 use Tomaj\Prepositioner\Language\LanguageInterface;
+use Tomaj\Prepositioner\Language\SlovakLanguage;
+use Tomaj\Prepositioner\Language\CzechLanguage;
+use Tomaj\Prepositioner\Language\RomanianLanguage;
+use Tomaj\Prepositioner\Language\EmptyLanguage;
 
 final class Factory
 {
@@ -17,10 +21,10 @@ final class Factory
     private static function createLanguageInstance(string $language): LanguageInterface
     {
         $className = match (strtolower($language)) {
-            'slovak' => '\Tomaj\Prepositioner\Language\SlovakLanguage',
-            'czech' => '\Tomaj\Prepositioner\Language\CzechLanguage',
-            'romanian' => '\Tomaj\Prepositioner\Language\RomanianLanguage',
-            'empty' => '\Tomaj\Prepositioner\Language\EmptyLanguage',
+            'slovak' => SlovakLanguage::class,
+            'czech' => CzechLanguage::class,
+            'romanian' => RomanianLanguage::class,
+            'empty' => EmptyLanguage::class,
             default => '\Tomaj\Prepositioner\Language\\' . ucfirst($language) . 'Language'
         };
 

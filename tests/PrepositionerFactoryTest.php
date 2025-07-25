@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Tests;
@@ -26,6 +27,7 @@ class InvalidLanguage
 #[CoversClass(\Tomaj\Prepositioner\Language\SlovakLanguage::class)]
 #[CoversClass(\Tomaj\Prepositioner\Language\CzechLanguage::class)]
 #[CoversClass(\Tomaj\Prepositioner\Language\RomanianLanguage::class)]
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MultipleClasses
 final class PrepositionerFactoryTest extends TestCase
 {
     public function testCreatePrepositioner(): void
@@ -38,14 +40,14 @@ final class PrepositionerFactoryTest extends TestCase
     {
         $this->expectException(LanguageNotExistsException::class);
         $this->expectExceptionMessage("Language class '\\Tomaj\\Prepositioner\\Language\\NonexistentLanguage' doesn't exist");
-        
+
         Factory::build('nonexistent');
     }
 
     public function testFactorySupportsKnownLanguages(): void
     {
         $languages = ['slovak', 'czech', 'romanian', 'empty'];
-        
+
         foreach ($languages as $language) {
             $prepositioner = Factory::build($language);
             $this->assertInstanceOf(Prepositioner::class, $prepositioner);
@@ -56,7 +58,7 @@ final class PrepositionerFactoryTest extends TestCase
     {
         $customEscape = '###ESCAPE###';
         $prepositioner = Factory::build('empty', $customEscape);
-        
+
         $this->assertInstanceOf(Prepositioner::class, $prepositioner);
     }
 
@@ -65,14 +67,15 @@ final class PrepositionerFactoryTest extends TestCase
         // We need to test the case where class exists but doesn't implement LanguageInterface
         // Since our factory looks for classes in the Language namespace, we need to create
         // a test that simulates this scenario. We'll use reflection to test this edge case.
-        
+
         $this->expectException(LanguageNotExistsException::class);
         $this->expectExceptionMessage("must implement LanguageInterface");
-        
+
         // Create a temporary class file to test this scenario
         $tempClassName = 'Tomaj\\Prepositioner\\Language\\TestInvalidLanguage';
-        
+
         // We need to use eval to create a class in the correct namespace for this test
+        // phpcs:ignore PSR1.Classes.ClassDeclaration.MultipleClasses
         eval('
             namespace Tomaj\\Prepositioner\\Language;
             class TestInvalidLanguage {
@@ -81,7 +84,7 @@ final class PrepositionerFactoryTest extends TestCase
                 }
             }
         ');
-        
+
         Factory::build('testInvalid');
     }
 }

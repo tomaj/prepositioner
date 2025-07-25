@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Tests\Language;
@@ -29,7 +30,7 @@ final class LanguageTest extends TestCase
     {
         $prepositions = $language->prepositions();
         $this->assertIsArray($prepositions);
-        
+
         foreach ($prepositions as $preposition) {
             $this->assertIsString($preposition);
             $this->assertNotEmpty($preposition);
@@ -50,12 +51,12 @@ final class LanguageTest extends TestCase
     {
         $slovak = new SlovakLanguage();
         $prepositions = $slovak->prepositions();
-        
+
         $this->assertContains('a', $prepositions);
         $this->assertContains('na', $prepositions);
         $this->assertContains('pre', $prepositions);
         $this->assertContains('pred', $prepositions);
-        
+
         // Test specific Slovak prepositions
         $this->assertContains('či', $prepositions);
         $this->assertContains('skrz', $prepositions);
@@ -65,7 +66,7 @@ final class LanguageTest extends TestCase
     {
         $czech = new CzechLanguage();
         $prepositions = $czech->prepositions();
-        
+
         $this->assertContains('a', $prepositions);
         $this->assertContains('k', $prepositions);
         $this->assertContains('o', $prepositions);
@@ -76,7 +77,7 @@ final class LanguageTest extends TestCase
     {
         $romanian = new RomanianLanguage();
         $prepositions = $romanian->prepositions();
-        
+
         $this->assertContains('cu', $prepositions);
         $this->assertContains('de', $prepositions);
         $this->assertContains('în', $prepositions);

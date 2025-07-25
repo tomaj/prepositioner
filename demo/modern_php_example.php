@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Tomaj\Prepositioner\Factory;
 use Tomaj\Prepositioner\Prepositioner;
 
-// Enum pre jazyky (PHP 8.1+ feature, ale ukážka modernizácie)
+// Enum for languages (PHP 8.1+ feature, but demonstration of modernization)
 enum SupportedLanguage: string
 {
     case SLOVAK = 'slovak';
@@ -16,7 +16,7 @@ enum SupportedLanguage: string
 }
 
 /**
- * Moderná ukážka použitia Prepositioner knižnice s PHP 8.0+ funkciami
+ * Modern demonstration of Prepositioner library usage with PHP 8.0+ features
  */
 final class ModernPrepositionerDemo
 {
@@ -28,37 +28,37 @@ final class ModernPrepositionerDemo
 
     public function demonstratePrepositioner(): void
     {
-        // Použitie match expression namiesto switch
+        // Using match expression instead of switch
         $description = match ($this->language) {
-            SupportedLanguage::SLOVAK => 'slovenské predložky',
-            SupportedLanguage::CZECH => 'české predložky', 
-            SupportedLanguage::ROMANIAN => 'rumunské predložky',
-            SupportedLanguage::EMPTY => 'žiadne predložky'
+            SupportedLanguage::SLOVAK => 'Slovak prepositions',
+            SupportedLanguage::CZECH => 'Czech prepositions', 
+            SupportedLanguage::ROMANIAN => 'Romanian prepositions',
+            SupportedLanguage::EMPTY => 'no prepositions'
         };
 
         if ($this->verbose) {
-            echo "🚀 Modernizovaná Prepositioner knižnica - {$description}\n";
-            echo "📦 PHP verzia: " . PHP_VERSION . "\n\n";
+            echo "🚀 Modernized Prepositioner library - {$description}\n";
+            echo "📦 PHP version: " . PHP_VERSION . "\n\n";
         }
 
-        // Vytvorenie prepositioner pomocou Factory
+        // Creating prepositioner using Factory
         $prepositioner = Factory::build($this->language->value);
         
-        // Test vzorky
+        // Test samples
         $testTexts = [
-            'Idem s mamou do obchodu.',
-            'Stretol som ho v parku.',
-            'Kniha je na stole.',
-            'Rozprávali sme sa o práci.',
-            'Čakám na autobus už hodinu.',
+            'I am going with mom to the store.',
+            'I met him in the park.',
+            'The book is on the table.',
+            'We talked about work.',
+            'I have been waiting for the bus for an hour.',
         ];
 
         foreach ($testTexts as $text) {
             $formatted = $prepositioner->formatText($text);
             
             if ($this->verbose) {
-                echo "📝 Pôvodný text: {$text}\n";
-                echo "✨ Formatovaný:   {$formatted}\n";
+                echo "📝 Original text: {$text}\n";
+                echo "✨ Formatted:     {$formatted}\n";
                 echo str_repeat('-', 50) . "\n";
             } else {
                 echo $formatted . "\n";
@@ -67,7 +67,7 @@ final class ModernPrepositionerDemo
     }
 
     /**
-     * Ukážka použitia constructor property promotion a readonly properties
+     * Demonstration of constructor property promotion and readonly properties usage
      */
     public function createCustomPrepositioner(array $customWords): Prepositioner
     {
@@ -78,7 +78,7 @@ final class ModernPrepositionerDemo
     }
 
     /**
-     * Ukážka s typed properties a lepšou type safety
+     * Demonstration with typed properties and better type safety
      */
     public function getLanguageStats(): array
     {
@@ -95,8 +95,8 @@ final class ModernPrepositionerDemo
     }
 }
 
-// Spustenie demo
-echo "🎯 Prepositioner - Moderná PHP 8.0+ verzia\n";
+// Running demo
+echo "🎯 Prepositioner - Modern PHP 8.0+ version\n";
 echo "==========================================\n\n";
 
 $demo = new ModernPrepositionerDemo(
@@ -106,7 +106,7 @@ $demo = new ModernPrepositionerDemo(
 
 $demo->demonstratePrepositioner();
 
-echo "\n📊 Informácie o jazyku:\n";
+echo "\n📊 Language information:\n";
 print_r($demo->getLanguageStats());
 
-echo "\n✅ Demo úspešne dokončené! Všetky PHP 8.0+ funkcie fungujú správne.\n";
+echo "\n✅ Demo completed successfully! All PHP 8.0+ features work correctly.\n";
