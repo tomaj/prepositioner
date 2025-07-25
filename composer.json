@@ -27,5 +27,22 @@
         "psr-4": {
             "Tomaj\\Prepositioner\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage",
+        "cs-check": "phpcs --standard=PSR12 src tests",
+        "cs-fix": "phpcbf --standard=PSR12 src tests",
+        "quality": [
+            "@cs-check",
+            "@test"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "*": false
+        }
     }
 }
