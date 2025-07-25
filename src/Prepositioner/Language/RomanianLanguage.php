@@ -1,37 +1,28 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Language;
 
-class RomanianLanguage implements LanguageInterface
+final class RomanianLanguage implements LanguageInterface
 {
+    private const TWO_LETTER = ['cu', 'de', 'în', 'la', 'pe'];
+    private const THREE_LETTER = ['cât', 'pro'];
+    private const FOUR_LETTER = ['fără', 'până', 'prin', 'spre'];
+    private const FIVE_LETTER = ['între', 'peste'];
+    private const SIX_LETTER = ['dintre', 'pentru'];
+
+    /**
+     * @return array<string>
+     */
     public function prepositions(): array
     {
         return [
-            /* 2 letter */
-            'cu',
-            'de',
-            'în',
-            'la',
-            'pe',
-
-            /* 3 letter */
-            'cât',
-            'pro',
-
-            /* 4 letter */
-            'fără',
-            'până',
-            'prin',
-            'spre',
-
-            /* 5 letter */
-            'între',
-            'peste',
-
-            /* 6 letter */
-            'dintre',
-            'pentru',
+            ...self::TWO_LETTER,
+            ...self::THREE_LETTER,
+            ...self::FOUR_LETTER,
+            ...self::FIVE_LETTER,
+            ...self::SIX_LETTER,
         ];
     }
 }

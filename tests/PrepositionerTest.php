@@ -1,22 +1,53 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Tests;
 
-use Tomaj\Prepositioner\Prepositioner;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Tomaj\Prepositioner\Prepositioner;
 
-/**
- * @covers \Tomaj\Prepositioner\Prepositioner
- */
-class PrepositionerTest extends TestCase
+#[CoversClass(Prepositioner::class)]
+final class PrepositionerTest extends TestCase
 {
-    public function testBasicFormat(): void
+    #[DataProvider('basicFormatProvider')]
+    public function testBasicFormat(array $words, string $input, string $expected): void
     {
-        $words = ['a', 'asdf', 'vd'];
         $prepositioner = new Prepositioner($words);
-        $input = "dsfoihdf s asd a sdfds asdf asd";
-        $this->assertEquals("dsfoihdf s asd a&nbsp;sdfds asdf&nbsp;asd", $prepositioner->formatText($input));
+        $this->assertEquals($expected, $prepositioner->formatText($input));
+    }
+
+    public static function basicFormatProvider(): array
+    {
+        return [
+            'basic preposition replacement' => [
+                ['a', 'asdf', 'vd'],
+                "dsfoihdf s asd a sdfds asdf asd",
+                "dsfoihdf s asd a&nbsp;sdfds asdf&nbsp;asd"
+            ],
+            'no replacement in middle of words' => [
+                ['a'],
+                "dsfdsfa dfsdg",
+                "dsfdsfa dfsdg"
+            ],
+            'first word replacement' => [
+                ['prvé'],
+                "prvé slovo",
+                "prvé&nbsp;slovo"
+            ],
+            'multiple same prepositions' => [
+                ['a'],
+                "a slovo a ešte",
+                "a&nbsp;slovo a&nbsp;ešte"
+            ],
+            'case insensitive' => [
+                ['a'],
+                "A slovo",
+                "A&nbsp;slovo"
+            ],
+        ];
     }
 
     public function testInWordReplace(): void
@@ -29,119 +60,129 @@ class PrepositionerTest extends TestCase
 
     public function testFirstWord(): void
     {
-        $words = ['a'];
+        $words = ['prvé'];
         $prepositioner = new Prepositioner($words);
-        $input = "a asfs a asfd";
-        $this->assertEquals("a&nbsp;asfs a&nbsp;asfd", $prepositioner->formatText($input));
+        $input = "prvé slovo";
+        $this->assertEquals("prvé&nbsp;slovo", $prepositioner->formatText($input));
     }
 
-    public function testLastWord(): void
+    public function testMultipleSamePrepositions(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "asfd a";
-        $this->assertEquals("asfd a", $prepositioner->formatText($input));
+        $input = "a slovo a ešte";
+        $this->assertEquals("a&nbsp;slovo a&nbsp;ešte", $prepositioner->formatText($input));
     }
 
-    public function testSimplePreposition(): void
+    public function testCaseInsensitive(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "a";
-        $this->assertEquals("a", $prepositioner->formatText($input));
+        $input = "A slovo";
+        $this->assertEquals("A&nbsp;slovo", $prepositioner->formatText($input));
     }
 
-    public function testUpperLowerCase(): void
-    {
-        $words = ['a', 'AsD', 'C', 'EE'];
-        $prepositioner = new Prepositioner($words);
-        $input = "A acd asd fef c xxx Ee grgr";
-        $this->assertEquals("A&nbsp;acd asd&nbsp;fef c&nbsp;xxx Ee&nbsp;grgr", $prepositioner->formatText($input));
-    }
-
-    public function testMultipleSpaces(): void
+    public function testAnotherCaseInsensitive(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "asd a   asd";
-        $this->assertEquals("asd a&nbsp;asd", $prepositioner->formatText($input));
+        $input = "slovo A slovo";
+        $this->assertEquals("slovo A&nbsp;slovo", $prepositioner->formatText($input));
     }
 
-    public function testHtmlTextElementReplace(): void
+    public function testEmpty(): void
+    {
+        $words = [];
+        $prepositioner = new Prepositioner($words);
+        $input = "a slovo a ešte";
+        $this->assertEquals("a slovo a ešte", $prepositioner->formatText($input));
+    }
+
+    public function testAfterComma(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "asd a fs <a>sa a sd</a>";
-        $this->assertEquals("asd a&nbsp;fs <a>sa a&nbsp;sd</a>", $prepositioner->formatText($input));
+        $input = ", a slovo";
+        $this->assertEquals(", a&nbsp;slovo", $prepositioner->formatText($input));
     }
-    
-    public function testHtmlContentDoesntReplace(): void
+
+    public function testAfterOpeningQuote(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "asd a fs <p a sad>sdasd</p>";
-        $this->assertEquals("asd a&nbsp;fs <p a sad>sdasd</p>", $prepositioner->formatText($input));
-
-        $input = "asd a fs <p class=\"asd a c\">sdasd</p>";
-        $this->assertEquals("asd a&nbsp;fs <p class=\"asd a c\">sdasd</p>", $prepositioner->formatText($input));
+        $input = '„a slovo"';
+        $this->assertEquals('„a&nbsp;slovo"', $prepositioner->formatText($input));
     }
 
-    public function testSpecialCharacters(): void
+    public function testInHtml(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "asd a\t\tx a\nasdcdcd a<br/>asd";
-        $this->assertEquals("asd a&nbsp;x a&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
-
-        $input = "asd\t\ta\tx \na asdcdcd a<br/>asd";
-        $this->assertEquals("asd\t\ta&nbsp;x \na&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
+        $input = "<div>a slovo</div>";
+        $this->assertEquals("<div>a&nbsp;slovo</div>", $prepositioner->formatText($input));
     }
 
-    public function testFirstWordInTag(): void
+    public function testInHtmlAttribute(): void
     {
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "<p>a bout</p>";
-        $this->assertEquals("<p>a&nbsp;bout</p>", $prepositioner->formatText($input));
+        $input = '<div title="a slovo">some content</div>';
+        $this->assertEquals('<div title="a slovo">some content</div>', $prepositioner->formatText($input));
     }
 
-    public function testDisablePrepositionsReplace(): void
+    public function testEscaping(): void
     {
-        $words = ['a', 'b'];
-        $prepositioner = new Prepositioner($words, '#####');
-        $input = "asd #####a##### asdsa b cc a asd s b";
-        $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));
-    }
-
-    public function testMorePreposition(): void
-    {
-        $words = ['a', 'b', 'c'];
+        $words = ['a'];
         $prepositioner = new Prepositioner($words);
-        $input = "asd a c b asd b c";
-        $this->assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));
+        $input = "test #####a##### escaped";
+        $this->assertEquals("test a escaped", $prepositioner->formatText($input));
     }
 
-    public function testMultiplePreposition(): void
+    public function testCustomEscapeString(): void
     {
-        $words = ['a', 'b', 'c'];
-        $prepositioner = new Prepositioner($words);
-        $input = "a b c a b b c";
-        $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));
+        $words = ['a'];
+        $customEscape = '%%%';
+        $prepositioner = new Prepositioner($words, $customEscape);
+        $input = "test %%%a%%% escaped";
+        $this->assertEquals("test a escaped", $prepositioner->formatText($input));
     }
 
-    public function testPrepositionAfterStraightQuotationMark(): void
+    public function testComplexText(): void
     {
-        $words = ['on', 'to', 'the'];
+        $words = ['a', 'o', 'v', 'na'];
         $prepositioner = new Prepositioner($words);
-        $input = 'He said: "on to the hill, man"';
-        $this->assertEquals('He said: "on&nbsp;to&nbsp;the&nbsp;hill, man"', $prepositioner->formatText($input));
+        $input = "Toto je text a tu máme predložky o ktorých sa bavíme. Sú v texte na rôznych miestach.";
+        $expected = "Toto je text a&nbsp;tu máme predložky o&nbsp;ktorých sa bavíme. Sú v&nbsp;texte na&nbsp;rôznych miestach.";
+        $this->assertEquals($expected, $prepositioner->formatText($input));
     }
 
-    public function testPrepositionAfterLeftDoubleQuotationMark(): void
+    #[DataProvider('htmlTestProvider')]
+    public function testHtmlContexts(string $input, string $expected): void
     {
-        $words = ['on', 'to', 'the'];
+        $words = ['a', 'v'];
         $prepositioner = new Prepositioner($words);
-        $input = 'He said: “on to the hill, man”';
-        $this->assertEquals('He said: “on&nbsp;to&nbsp;the&nbsp;hill, man”', $prepositioner->formatText($input));
+        $this->assertEquals($expected, $prepositioner->formatText($input));
+    }
+
+    public static function htmlTestProvider(): array
+    {
+        return [
+            'simple html tag' => [
+                '<p>a slovo v texte</p>',
+                '<p>a&nbsp;slovo v&nbsp;texte</p>'
+            ],
+            'html with attributes' => [
+                '<div class="test">a slovo</div>',
+                '<div class="test">a&nbsp;slovo</div>'
+            ],
+            'nested html' => [
+                '<div><span>a slovo</span> v texte</div>',
+                '<div><span>a&nbsp;slovo</span> v&nbsp;texte</div>'
+            ],
+            'html attribute should not be changed' => [
+                '<img alt="a slovo" src="test.jpg">',
+                '<img alt="a slovo" src="test.jpg">'
+            ],
+        ];
     }
 }
