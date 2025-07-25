@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Tomaj\Prepositioner\Tests;
+namespace Tomaj\Prepositioner\Tests\Language;
 
-use Tomaj\Prepositioner\Language\CzechLanguage;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Tomaj\Prepositioner\Language\CzechLanguage;
 
-/**
- * @covers \Tomaj\Prepositioner\Language\CzechLanguage
- */
-class CzechLanaguageTest extends TestCase
+#[CoversClass(CzechLanguage::class)]
+final class CzechLanguageTest extends TestCase
 {
     public function testLanguage(): void
     {

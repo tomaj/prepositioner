@@ -1,21 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner;
 
-class Prepositioner
+final class Prepositioner
 {
-    private $quotationMarkArray = ["\"", "'", "„", "‚", "“", "‘", "«", "‹"];
-    private $prepositionsArray = [];
+    private const QUOTATION_MARKS = ["\"", "'", "„", "‚", "“", "‘", "«", "‹"];
+    private const SPACE_CHARACTER = "&nbsp;";
 
-    private $spaceCharacter = "&nbsp;";
-
-    private $escapeString;
-
-    public function __construct(array $prepositionsArray, string $escapeString = '#####')
-    {
-        $this->prepositionsArray = $prepositionsArray;
-        $this->escapeString = $escapeString;
+    /**
+     * @param array<string> $prepositionsArray
+     */
+    public function __construct(
+        private readonly array $prepositionsArray,
+        private readonly string $escapeString = '#####'
+    ) {
     }
 
     public function formatText(string $text): string
@@ -25,17 +25,19 @@ class Prepositioner
         }
 
         $prepositions = implode('|', $this->prepositionsArray);
-        $quotationMarks = implode('|', $this->quotationMarkArray);
+        $quotationMarks = implode('|', self::QUOTATION_MARKS);
 
         $pattern = "#(\s|^|>|;|{$quotationMarks})({$prepositions})\s+(?=[^>]*(<|$))#i";
-        $replacement = "$1$2{$this->spaceCharacter}";
+        $replacement = "$1$2" . self::SPACE_CHARACTER;
 
+        // Apply the pattern twice for edge cases
         $text = preg_replace($pattern, $replacement, $text);
         $text = preg_replace($pattern, $replacement, $text);
 
-        $pattern = "/{$this->escapeString}({$prepositions}){$this->escapeString}/i";
-        $text = preg_replace($pattern, "$1", $text);
+        // Restore escaped prepositions
+        $escapePattern = "/{$this->escapeString}({$prepositions}){$this->escapeString}/i";
+        $text = preg_replace($escapePattern, "$1", $text);
 
-        return $text;
+        return $text ?? '';
     }
 }

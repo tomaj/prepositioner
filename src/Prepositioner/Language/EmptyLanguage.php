@@ -1,10 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Language;
 
-class EmptyLanguage implements LanguageInterface
+final class EmptyLanguage implements LanguageInterface
 {
+    /**
+     * @return array<string>
+     */
     public function prepositions(): array
     {
         return [];

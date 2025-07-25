@@ -1,58 +1,132 @@
 Prepositioner
 =============
 
-PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
+PHP Prepositioner for replacing prepositions with `&nbsp;` after preposition
 
 [![Code Climate](https://codeclimate.com/github/tomaj/prepositioner/badges/gpa.svg)](https://codeclimate.com/github/tomaj/prepositioner)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d82eb747d9ac33571be3/test_coverage)](https://codeclimate.com/github/tomaj/prepositioner/test_coverage)
 [![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner)
 [![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
 
+## Requirements
 
-Instalation
------------
+- **PHP 8.0** or higher
+- Uses modern PHP 8.0+ features including:
+  - Constructor property promotion
+  - Readonly properties
+  - Match expressions
+  - Attributes instead of docblock annotations
+  - Union types
+  - Spread operator in arrays
+
+## Installation
 
 Install package via composer:
 
-``` bash
-$ composer require tomaj/prepositioner
+```bash
+composer require tomaj/prepositioner
 ```
 
-Usage
------
+## Usage
 
-Simple usage without *Factory* is very simple:
+### Simple usage without Factory
 
-``` php
-$prepositioner = new Tomaj\Prepositioner\Prepositioner(['one', 'two']);
-$prepositioner->formatText($inputText);
+```php
+use Tomaj\Prepositioner\Prepositioner;
+
+$prepositioner = new Prepositioner(['one', 'two']);
+$result = $prepositioner->formatText($inputText);
 ```
 
-This example replaces all occurences of *'one'* or *'two'* strings in ```$inputText``` as *'one&amp;nbsp;'* and *'two&amp;nbsp;'*.
+This example replaces all occurrences of *'one'* or *'two'* strings in `$inputText` as *'one&nbsp;'* and *'two&nbsp;'*.
 
-For using with *Factory* which contains language support try:
+### Using Factory with language support
 
-``` php
-$prepositioner = Tomaj\Prepositioner\Factory::build('slovak')
-$prepositioner->formatText($inputText);
+```php
+use Tomaj\Prepositioner\Factory;
+
+$prepositioner = Factory::build('slovak');
+$result = $prepositioner->formatText($inputText);
 ```
 
-Extending
----------
+### Supported Languages
 
-For new language support you need to implement new language class which implements *LanguageInterface* with prepositions. See *SlovakLanguage* for details.
+- **Slovak** - `Factory::build('slovak')`
+- **Czech** - `Factory::build('czech')`  
+- **Romanian** - `Factory::build('romanian')`
+- **Empty** - `Factory::build('empty')` - for testing or custom usage
 
+### Custom escape string
 
-Upgrade
--------
+```php
+use Tomaj\Prepositioner\Factory;
 
-**From version 2 to 3**
-- Minimum php version is **7.3** from now
-- If you are using custom *Language* file from otside or from this repository (and don't use `Tomaj\Prepositioner\Factory`) you have to change namespace from `\Tomaj\Prepositioner\MyLanguage` to `\Tomaj\Prepositioner\Language\MyLanguage`
-- *Note:* new version includes `declare(strict_types=1);` in all files
+$prepositioner = Factory::build('slovak', '###CUSTOM###');
+$result = $prepositioner->formatText($inputText);
+```
 
+## Extending
 
-Known issue
------------
+To add support for a new language, implement the `LanguageInterface`:
 
-1. each new language has to be in *Tomaj\Prepositioner\Language* namespace if you would like to use Factory
+```php
+<?php
+declare(strict_types=1);
+
+namespace Tomaj\Prepositioner\Language;
+
+final class MyLanguage implements LanguageInterface
+{
+    private const PREPOSITIONS = ['my', 'custom', 'prepositions'];
+
+    /**
+     * @return array<string>
+     */
+    public function prepositions(): array
+    {
+        return self::PREPOSITIONS;
+    }
+}
+```
+
+Then use it directly:
+
+```php
+use Tomaj\Prepositioner\Prepositioner;
+use Tomaj\Prepositioner\Language\MyLanguage;
+
+$language = new MyLanguage();
+$prepositioner = new Prepositioner($language->prepositions());
+```
+
+Or register it for use with the Factory by placing it in the `Tomaj\Prepositioner\Language` namespace.
+
+## What's New in v4.0
+
+- **PHP 8.0+ required** - modernized codebase with latest PHP features
+- **Constructor property promotion** - cleaner, more concise code
+- **Readonly properties** - improved immutability and type safety
+- **Match expressions** - better performance and readability in Factory
+- **PHPUnit 10** - latest testing framework with attributes
+- **PSR-4 autoloading** - improved autoloader efficiency
+- **Final classes** - better encapsulation and performance
+- **Typed arrays** - better documentation and IDE support
+
+## Migration from v3.x
+
+- Minimum PHP version is now **8.0**
+- All functionality remains the same - no breaking changes to public API
+- If extending classes, note that most classes are now `final`
+- Tests now use PHPUnit 10 with attributes instead of docblock annotations
+
+## Development
+
+Run tests:
+```bash
+composer test
+```
+
+Code style:
+```bash
+composer cs
+```
