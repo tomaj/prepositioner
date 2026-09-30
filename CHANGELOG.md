@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **BREAKING**: Minimum PHP version is now 8.2
 - **BREAKING**: Updated PHPUnit to ^10.0|^11.0
+- **BREAKING**: All regex patterns now use `/u` modifier for proper Unicode/UTF-8 support
+- **BREAKING**: `Prepositioner::formatText()` now throws `PrepositionerException` on regex errors (previously returned original text silently)
+- **BREAKING**: `Factory::build()` now validates that language classes implement `LanguageInterface`
 - Updated coding standard from PSR-2 to PSR-12
 - Modernized CI/CD pipeline with single workflow
 - Added PHPStan static analysis with strict rules
 - Updated all development dependencies
+- Improved type hints in Prepositioner class (array and string types)
 
 ### Added
 - LICENSE file (MIT)
@@ -26,11 +30,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Composer scripts for development workflow
 - Comprehensive CI workflow testing PHP 8.2–8.5
 - Automated security auditing
+- `PrepositionerException` class for proper error handling
+- Unicode support: prepositions with diacritics and capital letters outside ASCII now work correctly (e.g., "Či", "În")
+- Proper escaping: `preg_quote()` is now used for all prepositions and escape strings
+- Comprehensive integration tests with real sentences in Slovak, Czech, and Romanian
+- Exception handling tests
 
 ### Fixed
 - Fixed phpunit.xml configuration for PHPUnit 11
-- Fixed README typos
+- Fixed README typos (Installation, occurrences, outside, missing semicolon)
+- Fixed test class name typo: `CzechLanaguageTest` → `CzechLanguageTest`
+- Fixed inconsistent variable names in language tests
+- Fixed Factory grammar: "doesn't exists" → "does not exist"
+- Fixed syntax errors in test with Unicode quotation marks
 - Updated README with badges and contributing guidelines
+- Fixed regex special characters handling in prepositions and escape strings
 
 ## [3.0.0] - 2020-12-03
 

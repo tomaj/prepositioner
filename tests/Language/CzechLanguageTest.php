@@ -6,16 +6,17 @@ namespace Tomaj\Prepositioner\Tests;
 
 use Tomaj\Prepositioner\Language\CzechLanguage;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Tomaj\Prepositioner\Language\CzechLanguage
- */
+
+
+#[CoversClass(CzechLanguage::class)]
 class CzechLanguageTest extends TestCase
 {
     public function testLanguage(): void
     {
         $czechLanguage = new CzechLanguage();
         $result = $czechLanguage->prepositions();
-        $this->assertNotEmpty($result);
+        self::assertNotEmpty($result);
     }
 }

@@ -8,6 +8,7 @@ use Tomaj\Prepositioner\Factory;
 use Tomaj\Prepositioner\LanguageNotExistsException;
 use PHPUnit\Framework\TestCase;
 
+
 /**
  * @covers \Tomaj\Prepositioner\Factory
  * @covers \Tomaj\Prepositioner\Prepositioner
@@ -18,12 +19,12 @@ class PrepositionerFactoryTest extends TestCase
     public function testCreatePrepositioner(): void
     {
         $prepositioner = Factory::build('empty');
-        $this->assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
+        self::assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
     }
 
     public function testFactoryThrowExceptionOnUnknownLanguage(): void
     {
-        $this->expectException(LanguageNotExistsException::class);
+        self::expectException(LanguageNotExistsException::class);
         $prepositioner = Factory::build('asfsdgsdgdsgf');
     }
 }

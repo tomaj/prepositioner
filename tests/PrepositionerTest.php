@@ -6,10 +6,11 @@ namespace Tomaj\Prepositioner\Tests;
 
 use Tomaj\Prepositioner\Prepositioner;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Tomaj\Prepositioner\Prepositioner
- */
+
+
+#[CoversClass(Prepositioner::class)]
 class PrepositionerTest extends TestCase
 {
     public function testBasicFormat(): void
@@ -17,7 +18,7 @@ class PrepositionerTest extends TestCase
         $words = ['a', 'asdf', 'vd'];
         $prepositioner = new Prepositioner($words);
         $input = "dsfoihdf s asd a sdfds asdf asd";
-        $this->assertEquals("dsfoihdf s asd a&nbsp;sdfds asdf&nbsp;asd", $prepositioner->formatText($input));
+        self::assertEquals("dsfoihdf s asd a&nbsp;sdfds asdf&nbsp;asd", $prepositioner->formatText($input));
     }
 
     public function testInWordReplace(): void
@@ -25,7 +26,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "dsfdsfa dfsdg";
-        $this->assertEquals("dsfdsfa dfsdg", $prepositioner->formatText($input));
+        self::assertEquals("dsfdsfa dfsdg", $prepositioner->formatText($input));
     }
 
     public function testFirstWord(): void
@@ -33,7 +34,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "a asfs a asfd";
-        $this->assertEquals("a&nbsp;asfs a&nbsp;asfd", $prepositioner->formatText($input));
+        self::assertEquals("a&nbsp;asfs a&nbsp;asfd", $prepositioner->formatText($input));
     }
 
     public function testLastWord(): void
@@ -41,7 +42,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asfd a";
-        $this->assertEquals("asfd a", $prepositioner->formatText($input));
+        self::assertEquals("asfd a", $prepositioner->formatText($input));
     }
 
     public function testSimplePreposition(): void
@@ -49,7 +50,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "a";
-        $this->assertEquals("a", $prepositioner->formatText($input));
+        self::assertEquals("a", $prepositioner->formatText($input));
     }
 
     public function testUpperLowerCase(): void
@@ -57,7 +58,7 @@ class PrepositionerTest extends TestCase
         $words = ['a', 'AsD', 'C', 'EE'];
         $prepositioner = new Prepositioner($words);
         $input = "A acd asd fef c xxx Ee grgr";
-        $this->assertEquals("A&nbsp;acd asd&nbsp;fef c&nbsp;xxx Ee&nbsp;grgr", $prepositioner->formatText($input));
+        self::assertEquals("A&nbsp;acd asd&nbsp;fef c&nbsp;xxx Ee&nbsp;grgr", $prepositioner->formatText($input));
     }
 
     public function testMultipleSpaces(): void
@@ -65,7 +66,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a   asd";
-        $this->assertEquals("asd a&nbsp;asd", $prepositioner->formatText($input));
+        self::assertEquals("asd a&nbsp;asd", $prepositioner->formatText($input));
     }
 
     public function testHtmlTextElementReplace(): void
@@ -73,7 +74,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a fs <a>sa a sd</a>";
-        $this->assertEquals("asd a&nbsp;fs <a>sa a&nbsp;sd</a>", $prepositioner->formatText($input));
+        self::assertEquals("asd a&nbsp;fs <a>sa a&nbsp;sd</a>", $prepositioner->formatText($input));
     }
 
     public function testHtmlContentDoesntReplace(): void
@@ -81,10 +82,10 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a fs <p a sad>sdasd</p>";
-        $this->assertEquals("asd a&nbsp;fs <p a sad>sdasd</p>", $prepositioner->formatText($input));
+        self::assertEquals("asd a&nbsp;fs <p a sad>sdasd</p>", $prepositioner->formatText($input));
 
         $input = "asd a fs <p class=\"asd a c\">sdasd</p>";
-        $this->assertEquals("asd a&nbsp;fs <p class=\"asd a c\">sdasd</p>", $prepositioner->formatText($input));
+        self::assertEquals("asd a&nbsp;fs <p class=\"asd a c\">sdasd</p>", $prepositioner->formatText($input));
     }
 
     public function testSpecialCharacters(): void
@@ -92,10 +93,10 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a\t\tx a\nasdcdcd a<br/>asd";
-        $this->assertEquals("asd a&nbsp;x a&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
+        self::assertEquals("asd a&nbsp;x a&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
 
         $input = "asd\t\ta\tx \na asdcdcd a<br/>asd";
-        $this->assertEquals("asd\t\ta&nbsp;x \na&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
+        self::assertEquals("asd\t\ta&nbsp;x \na&nbsp;asdcdcd a<br/>asd", $prepositioner->formatText($input));
     }
 
     public function testFirstWordInTag(): void
@@ -103,7 +104,7 @@ class PrepositionerTest extends TestCase
         $words = ['a'];
         $prepositioner = new Prepositioner($words);
         $input = "<p>a bout</p>";
-        $this->assertEquals("<p>a&nbsp;bout</p>", $prepositioner->formatText($input));
+        self::assertEquals("<p>a&nbsp;bout</p>", $prepositioner->formatText($input));
     }
 
     public function testDisablePrepositionsReplace(): void
@@ -111,7 +112,7 @@ class PrepositionerTest extends TestCase
         $words = ['a', 'b'];
         $prepositioner = new Prepositioner($words, '#####');
         $input = "asd #####a##### asdsa b cc a asd s b";
-        $this->assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));
+        self::assertEquals("asd a asdsa b&nbsp;cc a&nbsp;asd s b", $prepositioner->formatText($input));
     }
 
     public function testMorePreposition(): void
@@ -119,7 +120,7 @@ class PrepositionerTest extends TestCase
         $words = ['a', 'b', 'c'];
         $prepositioner = new Prepositioner($words);
         $input = "asd a c b asd b c";
-        $this->assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));
+        self::assertEquals("asd a&nbsp;c&nbsp;b&nbsp;asd b&nbsp;c", $prepositioner->formatText($input));
     }
 
     public function testMultiplePreposition(): void
@@ -127,7 +128,7 @@ class PrepositionerTest extends TestCase
         $words = ['a', 'b', 'c'];
         $prepositioner = new Prepositioner($words);
         $input = "a b c a b b c";
-        $this->assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));
+        self::assertEquals("a&nbsp;b&nbsp;c&nbsp;a&nbsp;b&nbsp;b&nbsp;c", $prepositioner->formatText($input));
     }
 
     public function testPrepositionAfterStraightQuotationMark(): void
@@ -135,7 +136,7 @@ class PrepositionerTest extends TestCase
         $words = ['on', 'to', 'the'];
         $prepositioner = new Prepositioner($words);
         $input = 'He said: "on to the hill, man"';
-        $this->assertEquals('He said: "on&nbsp;to&nbsp;the&nbsp;hill, man"', $prepositioner->formatText($input));
+        self::assertEquals('He said: "on&nbsp;to&nbsp;the&nbsp;hill, man"', $prepositioner->formatText($input));
     }
 
     public function testPrepositionAfterLeftDoubleQuotationMark(): void
@@ -143,6 +144,6 @@ class PrepositionerTest extends TestCase
         $words = ['on', 'to', 'the'];
         $prepositioner = new Prepositioner($words);
         $input = 'He said: “on to the hill, man”';
-        $this->assertEquals('He said: “on&nbsp;to&nbsp;the&nbsp;hill, man”', $prepositioner->formatText($input));
+        self::assertEquals('He said: “on&nbsp;to&nbsp;the&nbsp;hill, man”', $prepositioner->formatText($input));
     }
 }

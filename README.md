@@ -68,10 +68,24 @@ Upgrade
 -------
 
 **From version 3 to 4**
-- Minimum php version is **8.2** from now
+
+⚠️ **Breaking Changes:**
+- **Minimum PHP version is now 8.2** (was 7.3)
+- **Unicode behavior change**: All regex patterns now use `/u` modifier for proper UTF-8 support
+  - Prepositions with diacritics and capital letters outside ASCII now work correctly (e.g., "Či", "În")
+  - If you relied on ASCII-only behavior, this may change results
+- **Exception handling**: `Prepositioner::formatText()` now throws `PrepositionerException` on regex errors
+  - Previously it would silently return the original text
+  - Wrap calls in try-catch if you need to handle errors
+- **Factory validation**: `Factory::build()` now validates that language classes implement `LanguageInterface`
+  - Custom language classes must properly implement the interface
+
+**Other changes:**
 - Updated to PHPUnit 10/11
 - Coding standard updated to PSR-12
-- Added PHPStan static analysis
+- Added PHPStan static analysis with strict rules
+- Improved regex safety with proper `preg_quote()` usage
+- Comprehensive test coverage (≥95%)
 
 **From version 2 to 3**
 - Minimum php version is **7.3** from now

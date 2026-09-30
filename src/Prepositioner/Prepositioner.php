@@ -31,30 +31,64 @@ class Prepositioner
             return $text;
         }
 
-        $prepositions = implode('|', $this->prepositionsArray);
-        $quotationMarks = implode('|', $this->quotationMarkArray);
+        // Quote prepositions for safe regex usage
+        $quotedPrepositions = array_map(
+            /** @param string $p */
+            fn($p): string => preg_quote($p, '/'),
+            $this->prepositionsArray
+        );
+        $prepositions = implode('|', $quotedPrepositions);
 
-        $pattern = "#(\s|^|>|;|{$quotationMarks})({$prepositions})\s+(?=[^>]*(<|$))#i";
+        // Quote quotation marks for safe regex usage
+        $quotedQuotationMarks = array_map(
+            /** @param string $q */
+            fn($q): string => preg_quote($q, '/'),
+            $this->quotationMarkArray
+        );
+        $quotationMarks = implode('|', $quotedQuotationMarks);
+
+        // Quote escape string for safe regex usage
+        $quotedEscapeString = preg_quote($this->escapeString, '/');
+
+        // Main pattern with Unicode support (/u modifier)
+        $pattern = "/(\s|^|>|;|{$quotationMarks})({$prepositions})\s+(?=[^>]*(<|$))/iu";
         $replacement = "$1$2{$this->spaceCharacter}";
 
-        $result = preg_replace($pattern, $replacement, $text);
-        if ($result === null) {
-            return $text;
-        }
-        $text = $result;
+        // Apply replacement twice to handle consecutive prepositions
+        $text = $this->safePregReplace($pattern, $replacement, $text);
+        $text = $this->safePregReplace($pattern, $replacement, $text);
 
-        $result = preg_replace($pattern, $replacement, $text);
-        if ($result === null) {
-            return $text;
-        }
-        $text = $result;
+        // Remove escape markers
+        $escapePattern = "/{$quotedEscapeString}({$prepositions}){$quotedEscapeString}/iu";
+        $text = $this->safePregReplace($escapePattern, "$1", $text);
 
-        $escapePattern = "/{$this->escapeString}({$prepositions}){$this->escapeString}/i";
-        $result = preg_replace($escapePattern, "$1", $text);
+        return $text;
+    }
+
+    private function safePregReplace(string $pattern, string $replacement, string $subject): string
+    {
+        $result = preg_replace($pattern, $replacement, $subject);
+
         if ($result === null) {
-            return $text;
+            $error = preg_last_error();
+            $errorMessage = $this->getPregErrorMessage($error);
+            throw new PrepositionerException("preg_replace failed: {$errorMessage}");
         }
 
         return $result;
+    }
+
+    private function getPregErrorMessage(int $error): string
+    {
+        return match ($error) {
+            PREG_NO_ERROR => 'No error',
+            PREG_INTERNAL_ERROR => 'Internal PCRE error',
+            PREG_BACKTRACK_LIMIT_ERROR => 'Backtrack limit exhausted',
+            PREG_RECURSION_LIMIT_ERROR => 'Recursion limit exhausted',
+            PREG_BAD_UTF8_ERROR => 'Malformed UTF-8 data',
+            PREG_BAD_UTF8_OFFSET_ERROR => 'Bad UTF-8 offset',
+            PREG_JIT_STACKLIMIT_ERROR => 'JIT stack limit exhausted',
+            default => "Unknown error (code: {$error})",
+        };
     }
 }
