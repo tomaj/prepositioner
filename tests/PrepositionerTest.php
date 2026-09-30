@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Tests;
@@ -74,7 +75,7 @@ class PrepositionerTest extends TestCase
         $input = "asd a fs <a>sa a sd</a>";
         $this->assertEquals("asd a&nbsp;fs <a>sa a&nbsp;sd</a>", $prepositioner->formatText($input));
     }
-    
+
     public function testHtmlContentDoesntReplace(): void
     {
         $words = ['a'];

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Tests;
@@ -9,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Tomaj\Prepositioner\Language\CzechLanguage
  */
-class CzechLanaguageTest extends TestCase
+class CzechLanguageTest extends TestCase
 {
     public function testLanguage(): void
     {

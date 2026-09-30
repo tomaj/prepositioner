@@ -1,17 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner;
 
 class Prepositioner
 {
-    private $quotationMarkArray = ["\"", "'", "„", "‚", "“", "‘", "«", "‹"];
-    private $prepositionsArray = [];
+    /** @var array<int, string> */
+    private array $quotationMarkArray = ["\"", "'", "\u{201E}", "\u{201A}", "\u{201C}", "\u{2018}", "«", "‹"];
 
-    private $spaceCharacter = "&nbsp;";
+    /** @var array<int, string> */
+    private array $prepositionsArray = [];
 
-    private $escapeString;
+    private string $spaceCharacter = "&nbsp;";
 
+    private string $escapeString;
+
+    /**
+     * @param array<int, string> $prepositionsArray
+     */
     public function __construct(array $prepositionsArray, string $escapeString = '#####')
     {
         $this->prepositionsArray = $prepositionsArray;
@@ -20,7 +27,7 @@ class Prepositioner
 
     public function formatText(string $text): string
     {
-        if (empty($this->prepositionsArray)) {
+        if ($this->prepositionsArray === []) {
             return $text;
         }
 
@@ -30,12 +37,24 @@ class Prepositioner
         $pattern = "#(\s|^|>|;|{$quotationMarks})({$prepositions})\s+(?=[^>]*(<|$))#i";
         $replacement = "$1$2{$this->spaceCharacter}";
 
-        $text = preg_replace($pattern, $replacement, $text);
-        $text = preg_replace($pattern, $replacement, $text);
+        $result = preg_replace($pattern, $replacement, $text);
+        if ($result === null) {
+            return $text;
+        }
+        $text = $result;
 
-        $pattern = "/{$this->escapeString}({$prepositions}){$this->escapeString}/i";
-        $text = preg_replace($pattern, "$1", $text);
+        $result = preg_replace($pattern, $replacement, $text);
+        if ($result === null) {
+            return $text;
+        }
+        $text = $result;
 
-        return $text;
+        $escapePattern = "/{$this->escapeString}({$prepositions}){$this->escapeString}/i";
+        $result = preg_replace($escapePattern, "$1", $text);
+        if ($result === null) {
+            return $text;
+        }
+
+        return $result;
     }
 }

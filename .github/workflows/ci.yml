@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        php: ['8.2', '8.3', '8.4', '8.5']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring
+          coverage: xdebug
+          ini-values: error_reporting=E_ALL
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run security audit
+        run: composer audit
+
+      - name: PHP syntax check
+        run: find src tests -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: Run PHPCS (PSR-12)
+        run: vendor/bin/phpcs --standard=PSR12 src tests -n
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress
+
+      - name: Run PHPUnit with coverage
+        run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+      - name: Check test coverage threshold
+        if: matrix.php == '8.3' && matrix.os == 'ubuntu-latest'
+        run: |
+          php -r '
+          $xml = simplexml_load_file("build/logs/clover.xml");
+          $metrics = $xml->project->metrics;
+          $elements = (int)$metrics["elements"];
+          $coveredElements = (int)$metrics["coveredelements"];
+          $coverage = ($elements > 0) ? ($coveredElements / $elements) * 100 : 0;
+          echo "Coverage: " . number_format($coverage, 2) . "%\n";
+          if ($coverage < 73.0) {
+            echo "Error: Coverage is below threshold of 73%\n";
+            exit(1);
+          }
+          '
+
+      - name: Upload coverage to Codeclimate
+        if: matrix.php == '8.3' && matrix.os == 'ubuntu-latest' && github.event_name == 'push'
+        uses: paambaati/codeclimate-action@v9
+        continue-on-error: true
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageLocations: ${{ github.workspace }}/build/logs/clover.xml:clover
