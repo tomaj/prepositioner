@@ -1,0 +1,64 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    
+    // Source code directory
+    source: {
+        directories: [
+            "src"
+        ]
+    },
+    
+    // Log files
+    logs: {
+        text: "build/infection.log",
+        summary: "build/infection-summary.log",
+        json: "build/infection.json",
+        perMutator: "build/infection-per-mutator.md"
+    },
+    
+    // Mutation Score Indicator thresholds
+    // MSI: percentage of killed mutants (including timeouts and errors)
+    // Covered MSI: percentage of killed mutants in covered code only
+    // Equivalent mutants (quotation mark escaping, error message arms) are ignored
+    minMsi: 95,
+    minCoveredMsi: 95,
+    
+    // PHPUnit configuration
+    phpUnit: {
+        configDir: "."
+    },
+    
+    // Mutators configuration
+    mutators: {
+        "@default": true,
+
+        // Ignore equivalent mutants
+        "UnwrapArrayMap": {
+            ignore: [
+                // Quotation marks don't contain regex metacharacters,
+                // so removing preg_quote doesn't break functionality
+                "Tomaj\\Prepositioner\\Prepositioner::formatText"
+            ]
+        },
+        "PregQuote": {
+            ignore: [
+                // Quotation marks don't contain regex metacharacters,
+                // so removing preg_quote doesn't break functionality
+                "Tomaj\\Prepositioner\\Prepositioner::formatText"
+            ]
+        },
+        "MatchArmRemoval": {
+            ignore: [
+                // Error message match arms are only used when specific PCRE errors occur
+                // Cannot easily test all error codes without triggering actual PCRE failures
+                "Tomaj\\Prepositioner\\Prepositioner::getPregErrorMessage"
+            ]
+        }
+    },
+    
+    // Timeout settings
+    timeout: 10,
+    
+    // Test framework
+    testFramework: "phpunit"
+}

@@ -1,4 +1,6 @@
 .idea
 vendor
 composer.lock
-.phpunit.cache/test-results
+.phpunit.cache/
+.phpstan.cache/
+build/
