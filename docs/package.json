@@ -1,0 +1,17 @@
+{
+  "name": "prepositioner-docs",
+  "version": "1.0.0",
+  "description": "Documentation for tomaj/prepositioner",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.5.0"
+  }
+}
