@@ -1,10 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tomaj\Prepositioner\Language;
 
 class CzechLanguage implements LanguageInterface
 {
+    /**
+     * @return array<int, string>
+     */
     public function prepositions(): array
     {
         return [
@@ -17,6 +21,22 @@ class CzechLanguage implements LanguageInterface
             'u',
             'z',
             's',
+
+            /* 2 letters */
+            'do',
+            'na',
+            'od',
+            'po',
+            'ze',
+            'ku',
+            'ze',
+
+            /* 3+ letters */
+            'nad',
+            'pod',
+            'př',
+            'před',
+            'při',
         ];
     }
 }
