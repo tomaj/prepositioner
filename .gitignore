@@ -4,3 +4,6 @@ composer.lock
 .phpunit.cache/
 .phpstan.cache/
 build/
+docs/node_modules
+docs/.vitepress/dist
+docs/.vitepress/cache
