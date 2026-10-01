@@ -109,6 +109,23 @@ The `LanguageTestCase` base class automatically verifies that your language:
 6. Update documentation if needed
 7. Write a clear commit message
 
+## Documentation
+
+Documentation lives in the `docs/` directory and is built with VitePress. See the [online documentation](https://tomaj.github.io/prepositioner/) for the latest version.
+
+### Building Documentation Locally
+
+```bash
+cd docs
+npm install
+npm run docs:dev    # Start development server
+npm run docs:build  # Build for production
+```
+
+### Documentation Versioning
+
+For maintainers: When releasing a new major version, the documentation should be archived. See the [Versioning Docs](https://tomaj.github.io/prepositioner/guide/versioning.html) guide for detailed instructions on how to create archived documentation versions.
+
 ## Development Workflow
 
 ### Setup

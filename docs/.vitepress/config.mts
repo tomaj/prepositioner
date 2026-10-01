@@ -1,5 +1,13 @@
 import { defineConfig } from 'vitepress'
 
+// Version configuration
+const currentVersion = '4.x'
+const versions = [
+  { text: `Latest (${currentVersion})`, link: '/prepositioner/' }
+  // Archived versions will be added here when available
+  // { text: '3.x', link: '/prepositioner/3.x/' }
+]
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Prepositioner",
@@ -28,7 +36,11 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'API', link: '/api/reference' },
-      { text: 'v4.0.0', link: 'https://github.com/tomaj/prepositioner/releases' }
+      {
+        text: currentVersion,
+        items: versions
+      },
+      { text: 'Releases', link: 'https://github.com/tomaj/prepositioner/releases' }
     ],
 
     sidebar: [
@@ -57,7 +69,8 @@ export default defineConfig({
       {
         text: 'Contributing',
         items: [
-          { text: 'Contributing Guide', link: '/contributing' }
+          { text: 'Contributing Guide', link: '/contributing' },
+          { text: 'Versioning Docs', link: '/guide/versioning' }
         ]
       }
     ],
