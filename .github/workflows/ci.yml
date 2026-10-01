@@ -46,7 +46,7 @@ jobs:
         run: composer validate --strict
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer-${{ runner.os }}-${{ matrix.php }}-${{ matrix.prefer-lowest }}-${{ hashFiles('composer.json') }}
@@ -123,7 +123,7 @@ jobs:
           ini-values: error_reporting=E_ALL
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer-${{ runner.os }}-8.3-${{ hashFiles('composer.json') }}
