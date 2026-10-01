@@ -152,4 +152,8 @@ By contributing, you agree that your contributions will be licensed under the MI
 - Ask in your pull request
 - Check existing issues and PRs
 
+## Documentation Versioning
+
+For maintainers: See [Versioning Docs](/guide/versioning) for instructions on archiving documentation when releasing new major versions.
+
 Thank you for contributing! 🎉
