@@ -1,0 +1,120 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches:
+      - master
+      - 'docs-archive/*'
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+    tags:
+      - '*'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: docs
+
+      - name: Build current documentation (master)
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "Building current documentation from master branch..."
+          npm run docs:build
+          mkdir -p ../dist
+          cp -r .vitepress/dist/* ../dist/
+        working-directory: docs
+
+      - name: Build archived documentation versions
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "Checking for archived documentation versions..."
+          
+          # Get list of docs-archive/* branches from remote
+          ARCHIVE_BRANCHES=$(git branch -r | grep 'origin/docs-archive/' | sed 's|origin/||' || echo "")
+          
+          if [ -z "$ARCHIVE_BRANCHES" ]; then
+            echo "No archived versions found. Skipping archive builds."
+            exit 0
+          fi
+          
+          for branch in $ARCHIVE_BRANCHES; do
+            # Extract major version (e.g., docs-archive/3.x -> 3.x)
+            VERSION=$(echo "$branch" | sed 's|docs-archive/||')
+            echo "Building archived version: $VERSION"
+            
+            # Checkout the archive branch
+            git checkout "$branch"
+            
+            # Update base path in config for this version
+            cd docs
+            
+            # Ensure dependencies are installed
+            if [ ! -d "node_modules" ]; then
+              npm ci
+            fi
+            
+            # Temporarily update base path for this version
+            sed -i "s|base: '/prepositioner/'|base: '/prepositioner/$VERSION/'|" .vitepress/config.mts
+            
+            # Build the documentation
+            npm run docs:build
+            
+            # Copy to versioned directory in dist
+            mkdir -p ../../dist/$VERSION
+            cp -r .vitepress/dist/* ../../dist/$VERSION/
+            
+            # Return to master
+            cd ..
+            git checkout master
+          done
+        working-directory: .
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

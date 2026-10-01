@@ -3,10 +3,13 @@ Prepositioner
 PHP Prepositioner for replacing prepositions with &amp;nbsp; after preposition
 
 [![CI](https://github.com/tomaj/prepositioner/actions/workflows/ci.yml/badge.svg)](https://github.com/tomaj/prepositioner/actions/workflows/ci.yml)
+[![Documentation](https://img.shields.io/badge/docs-online-blue.svg)](https://tomaj.github.io/prepositioner/)
 [![Latest Stable Version](https://poser.pugx.org/tomaj/prepositioner/v/stable.svg)](https://packagist.org/packages/tomaj/prepositioner)
 [![Total Downloads](https://poser.pugx.org/tomaj/prepositioner/downloads)](https://packagist.org/packages/tomaj/prepositioner)
 [![PHP Version](https://img.shields.io/packagist/php-v/tomaj/prepositioner)](https://packagist.org/packages/tomaj/prepositioner)
 [![License](https://poser.pugx.org/tomaj/prepositioner/license.svg)](https://packagist.org/packages/tomaj/prepositioner)
+
+📚 **[Read the full documentation →](https://tomaj.github.io/prepositioner/)**
 
 ## Supported Languages
 
