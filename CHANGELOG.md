@@ -1,11 +1,16 @@
-# Changelog
-
+# Change Log
 All notable changes to this project will be documented in this file.
+Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [Unreleased][unreleased]
 
-## [Unreleased]
+### Added
+- Documentation site at https://tomaj.github.io/prepositioner/ (VitePress, deployed to GitHub Pages) ([#11](https://github.com/tomaj/prepositioner/pull/11))
+- Versioned documentation: a version menu and `docs-archive/<major>.x` branches for older majors ([#12](https://github.com/tomaj/prepositioner/pull/12))
+
+### Changed
+- CI tests PHP 8.6 and runs PHP 8.7 (nightly) without failing the build; `shivammathur/setup-php` is pinned to a commit
+- Updated the GitHub Actions used by CI and the docs deployment (`actions/checkout` 7, `actions/configure-pages` 6, `actions/upload-pages-artifact` 5, `actions/deploy-pages` 5)
 
 ## [4.0.0] - 2026-10-01
 
@@ -59,9 +64,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **BREAKING**: Minimum PHP version is now 7.2
-- **BREAKING**: Changed namespace for language classes from `\Tomaj\Prepositioner\Languages\*` to `\Tomaj\Prepositioner\Language\*`
-- Added `declare(strict_types=1);` to all PHP files
-- Removed support for PHP < 7.2
+- **BREAKING**: Language classes and `LanguageInterface` moved from the `Tomaj\Prepositioner` namespace to `Tomaj\Prepositioner\Language` (e.g. `Tomaj\Prepositioner\Language\SlovakLanguage`). Custom languages must implement `Tomaj\Prepositioner\Language\LanguageInterface`, and must live in that namespace to be found by `Factory::build()`
+- **BREAKING**: `declare(strict_types=1);` in all files; `Prepositioner::formatText()` declares a `string` return type
+- CI moved from Travis CI to GitHub Actions
 
 ### Added
 - Added `EmptyLanguage` class for cases without prepositions
@@ -79,10 +84,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0] - 2018-08-08
 
+### Added
+- Czech language support (`Factory::build('czech')`) ([#2](https://github.com/tomaj/prepositioner/pull/2))
+
 ### Changed
-- **BREAKING**: Added Czech language support
-- Added type hints to method signatures
-- Major refactoring and code improvements
+- **BREAKING**: Minimum PHP version is now 7.0
+- **BREAKING**: Scalar type hints on `Factory::build()`, `Prepositioner::__construct()` and `Prepositioner::formatText()`; `LanguageInterface::prepositions()` declares an `array` return type, so custom language classes must add `: array`
+- License changed from LGPL to MIT
 
 ## [1.1.3] - 2014-07-25
 
@@ -114,7 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HTML content support
 - Automatic replacement of spaces after single-letter prepositions with `&nbsp;`
 
-[Unreleased]: https://github.com/tomaj/prepositioner/compare/4.0.0...HEAD
+[unreleased]: https://github.com/tomaj/prepositioner/compare/4.0.0...HEAD
 [4.0.0]: https://github.com/tomaj/prepositioner/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/tomaj/prepositioner/compare/2.2.0...3.0.0
 [2.2.0]: https://github.com/tomaj/prepositioner/compare/2.1.0...2.2.0
