@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Documentation site at https://tomaj.github.io/prepositioner/ (VitePress, deployed to GitHub Pages) ([#11](https://github.com/tomaj/prepositioner/pull/11))
 - Versioned documentation: a version menu and `docs-archive/<major>.x` branches for older majors ([#12](https://github.com/tomaj/prepositioner/pull/12))
+- Slovak translation of the documentation site ([#28](https://github.com/tomaj/prepositioner/issues/28))
 
 ### Changed
 - CI tests PHP 8.6 and runs PHP 8.7 (nightly) without failing the build; `shivammathur/setup-php` is pinned to a commit

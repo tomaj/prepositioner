@@ -49,7 +49,7 @@ Want to add support for a new language? Check out our [Adding a Language Guide](
 3. **Write or update tests** as needed
 4. **Ensure all tests pass**
 5. **Run code quality checks**
-6. **Update documentation** if needed
+6. **Update documentation** if needed (English, and Slovak under `docs/sk/`)
 7. **Submit a pull request**
 
 ## Development Setup
