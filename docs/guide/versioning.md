@@ -9,6 +9,8 @@ The documentation is versioned to support multiple major versions simultaneously
 - **Current version** (`4.x`) - Lives on the `master` branch, deployed to the root: `https://tomaj.github.io/prepositioner/`
 - **Archived versions** - Live on `docs-archive/<major>.x` branches, deployed to subdirectories: `https://tomaj.github.io/prepositioner/<major>.x/`
 
+The Slovak translation is part of every version and is deployed under `/sk/` (for example `https://tomaj.github.io/prepositioner/sk/`).
+
 ::: tip Version Dropdown
 Users can switch between versions using the version dropdown in the navigation bar.
 :::
@@ -58,8 +60,8 @@ git checkout master
 
 # Add archived version to versions array:
 const versions = [
-  { text: 'Latest (5.x)', link: '/prepositioner/' },
-  { text: '4.x', link: '/prepositioner/4.x/' }
+  { text: 'Latest (5.x)', link: '/' },
+  { text: '4.x', link: 'https://tomaj.github.io/prepositioner/4.x/' }
 ]
 
 # Commit the changes
@@ -67,6 +69,8 @@ git add docs/.vitepress/config.mts
 git commit -m "docs: update to version 5.x"
 git push origin master
 ```
+
+Add the archived version to the `versionsSk` array as well; the Slovak navigation uses it.
 
 ### Step 3: Verify Deployment
 
@@ -89,6 +93,7 @@ Do not delete archived branches. They are needed for the deployment workflow to 
 The documentation deployment workflow (`.github/workflows/docs.yml`) automatically:
 
 - Triggers on pushes to `master` or any `docs-archive/*` branch
+- On pull requests, checks that every English page has a Slovak twin (`docs/scripts/check-locales.py`) and builds the docs
 - Builds the current version from `master` with `base: '/prepositioner/'`
 - Discovers and builds all `docs-archive/<major>.x` branches with `base: '/prepositioner/<major>.x/'`
 - Merges all builds into a single Pages artifact
@@ -125,9 +130,9 @@ The version dropdown is configured in `docs/.vitepress/config.mts`:
 // Version configuration
 const currentVersion = '4.x'
 const versions = [
-  { text: `Latest (${currentVersion})`, link: '/prepositioner/' },
+  { text: `Latest (${currentVersion})`, link: '/' },
   // Add archived versions here:
-  // { text: '3.x', link: '/prepositioner/3.x/' }
+  // { text: '3.x', link: 'https://tomaj.github.io/prepositioner/3.x/' }
 ]
 ```
 
