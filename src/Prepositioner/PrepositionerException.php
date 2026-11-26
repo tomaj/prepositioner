@@ -6,6 +6,4 @@ namespace Tomaj\Prepositioner;
 
 use RuntimeException;
 
-class PrepositionerException extends RuntimeException
-{
-}
+class PrepositionerException extends RuntimeException {}

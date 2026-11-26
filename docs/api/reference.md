@@ -361,7 +361,7 @@ Tomaj\Prepositioner\
 
 ## PHP Version Compatibility
 
-- **PHP 8.2+** required (as of version 4.0.0)
+- **PHP 8.4+** required (as of version 5.0.0)
 - Uses strict types: `declare(strict_types=1);`
 - All methods have proper type hints
 

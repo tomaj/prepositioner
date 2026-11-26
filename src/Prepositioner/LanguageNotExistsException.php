@@ -6,6 +6,4 @@ namespace Tomaj\Prepositioner;
 
 use Exception;
 
-class LanguageNotExistsException extends Exception
-{
-}
+class LanguageNotExistsException extends Exception {}

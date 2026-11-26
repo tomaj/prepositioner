@@ -9,6 +9,7 @@ class CzechLanguage implements LanguageInterface
     /**
      * @return array<int, string>
      */
+    #[\Override]
     public function prepositions(): array
     {
         return [

@@ -6,6 +6,7 @@ namespace Tomaj\Prepositioner\Language;
 
 class EmptyLanguage implements LanguageInterface
 {
+    #[\Override]
     public function prepositions(): array
     {
         return [];

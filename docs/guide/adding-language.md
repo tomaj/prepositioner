@@ -208,7 +208,7 @@ composer test
 vendor/bin/phpunit tests/Language/EnglishLanguageTest.php
 
 # Run code style check
-composer cs
+composer phpcs
 
 # Run static analysis
 composer phpstan
@@ -264,7 +264,7 @@ If you don't want to implement it yourself, you can [create a language support r
 - [ ] Includes language-specific tests
 - [ ] Tests real sentences
 - [ ] All tests pass
-- [ ] Code style passes (`composer cs`)
+- [ ] Code style passes (`composer phpcs`)
 - [ ] Static analysis passes (`composer phpstan`)
 - [ ] Updated README.md
 - [ ] Updated documentation

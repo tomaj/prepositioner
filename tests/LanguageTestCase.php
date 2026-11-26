@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tomaj\Prepositioner\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Tomaj\Prepositioner\Language\EmptyLanguage;
 use Tomaj\Prepositioner\Language\LanguageInterface;
 
 /**
@@ -39,7 +40,7 @@ abstract class LanguageTestCase extends TestCase
         $language = $this->createLanguage();
         $result = $language->prepositions();
 
-        self::assertIsArray($result);
+        self::assertTrue(array_is_list($result));
     }
 
     /**
@@ -51,14 +52,15 @@ abstract class LanguageTestCase extends TestCase
         $result = $language->prepositions();
 
         // Skip this test for EmptyLanguage
-        if (get_class($language) === 'Tomaj\Prepositioner\Language\EmptyLanguage') {
-            self::assertEmpty($result);
+        if ($language::class === EmptyLanguage::class) {
+            self::assertCount(0, $result);
             return;
         }
 
-        self::assertNotEmpty(
+        self::assertNotCount(
+            0,
             $result,
-            'Language prepositions() should return at least one preposition'
+            'Language prepositions() should return at least one preposition',
         );
     }
 
@@ -70,12 +72,11 @@ abstract class LanguageTestCase extends TestCase
         $language = $this->createLanguage();
         $result = $language->prepositions();
 
-        foreach ($result as $preposition) {
-            self::assertIsString(
-                $preposition,
-                'All prepositions must be strings'
-            );
-        }
+        self::assertSame(
+            $result,
+            array_filter($result, is_string(...)),
+            'All prepositions must be strings',
+        );
     }
 
     /**
@@ -87,9 +88,10 @@ abstract class LanguageTestCase extends TestCase
         $result = $language->prepositions();
 
         foreach ($result as $preposition) {
-            self::assertNotEmpty(
+            self::assertNotSame(
+                '',
                 $preposition,
-                'Prepositions must not be empty strings'
+                'Prepositions must not be empty strings',
             );
         }
     }
@@ -107,7 +109,7 @@ abstract class LanguageTestCase extends TestCase
         self::assertCount(
             count($result),
             $unique,
-            'All prepositions must be unique (no duplicates)'
+            'All prepositions must be unique (no duplicates)',
         );
     }
 
@@ -124,8 +126,8 @@ abstract class LanguageTestCase extends TestCase
             self::assertMatchesRegularExpression(
                 '/^[\p{L}\s\-\']+$/u',
                 $preposition,
-                "Preposition '{$preposition}' contains invalid characters. " .
-                "Only letters, spaces, hyphens, and apostrophes are allowed."
+                "Preposition '{$preposition}' contains invalid characters. "
+                . 'Only letters, spaces, hyphens, and apostrophes are allowed.',
             );
         }
     }
