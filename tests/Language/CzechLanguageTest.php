@@ -15,7 +15,7 @@ class CzechLanguageTest extends TestCase
     {
         $czechLanguage = new CzechLanguage();
         $result = $czechLanguage->prepositions();
-        self::assertNotEmpty($result);
+        self::assertNotCount(0, $result);
     }
 
     public function testContainsCommonPrepositions(): void
@@ -37,6 +37,6 @@ class CzechLanguageTest extends TestCase
     {
         $czechLanguage = new CzechLanguage();
         $result = $czechLanguage->prepositions();
-        self::assertIsArray($result);
+        self::assertTrue(array_is_list($result));
     }
 }

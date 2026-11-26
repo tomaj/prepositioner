@@ -17,7 +17,7 @@ composer require tomaj/prepositioner
 ```
 
 ::: info Requirements
-PHP 8.2 or higher
+PHP 8.4 or higher
 :::
 
 ## Quick Start

@@ -24,7 +24,7 @@ features:
     title: Bezpečné pre HTML
     details: Upravuje iba text, HTML značky a&nbsp;atribúty nechá nedotknuté, takže vaše značkovanie zostane v&nbsp;poriadku
   - icon: ⚡
-    title: Moderné PHP 8.2+
+    title: Moderné PHP 8.4+
     details: Využíva moderné PHP so striktnými typmi, dôsledným spracovaním chýb a&nbsp;podporou Unicode
   - icon: 🔧
     title: Jednoduchá integrácia

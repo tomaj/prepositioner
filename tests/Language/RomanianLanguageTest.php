@@ -15,7 +15,7 @@ class RomanianLanguageTest extends TestCase
     {
         $romanianLanguage = new RomanianLanguage();
         $result = $romanianLanguage->prepositions();
-        self::assertNotEmpty($result);
+        self::assertNotCount(0, $result);
     }
 
     public function testContainsCommonPrepositions(): void
@@ -44,6 +44,6 @@ class RomanianLanguageTest extends TestCase
     {
         $romanianLanguage = new RomanianLanguage();
         $result = $romanianLanguage->prepositions();
-        self::assertIsArray($result);
+        self::assertTrue(array_is_list($result));
     }
 }

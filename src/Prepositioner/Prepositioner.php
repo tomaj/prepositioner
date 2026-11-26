@@ -7,23 +7,14 @@ namespace Tomaj\Prepositioner;
 class Prepositioner
 {
     /** @var array<int, string> */
-    private array $quotationMarkArray = ["\"", "'", "\u{201E}", "\u{201A}", "\u{201C}", "\u{2018}", "«", "‹"];
+    private array $quotationMarkArray = ['"', "'", "\u{201E}", "\u{201A}", "\u{201C}", "\u{2018}", '«', '‹'];
 
-    /** @var array<int, string> */
-    private array $prepositionsArray = [];
-
-    private string $spaceCharacter = "&nbsp;";
-
-    private string $escapeString;
+    private string $spaceCharacter = '&nbsp;';
 
     /**
      * @param array<int, string> $prepositionsArray
      */
-    public function __construct(array $prepositionsArray, string $escapeString = '#####')
-    {
-        $this->prepositionsArray = $prepositionsArray;
-        $this->escapeString = $escapeString;
-    }
+    public function __construct(private readonly array $prepositionsArray, private readonly string $escapeString = '#####') {}
 
     public function formatText(string $text): string
     {
@@ -35,15 +26,15 @@ class Prepositioner
         $quotedPrepositions = array_map(
             /** @param string $p */
             fn($p): string => preg_quote($p, '/'),
-            $this->prepositionsArray
+            $this->prepositionsArray,
         );
         $prepositions = implode('|', $quotedPrepositions);
 
         // Quote quotation marks for safe regex usage
         $quotedQuotationMarks = array_map(
             /** @param string $q */
-            fn($q): string => preg_quote($q, '/'),
-            $this->quotationMarkArray
+            fn(string $q): string => preg_quote($q, '/'),
+            $this->quotationMarkArray,
         );
         $quotationMarks = implode('|', $quotedQuotationMarks);
 
@@ -60,9 +51,8 @@ class Prepositioner
 
         // Remove escape markers
         $escapePattern = "/{$quotedEscapeString}({$prepositions}){$quotedEscapeString}/iu";
-        $text = $this->safePregReplace($escapePattern, "$1", $text);
 
-        return $text;
+        return $this->safePregReplace($escapePattern, '$1', $text);
     }
 
     private function safePregReplace(string $pattern, string $replacement, string $subject): string

@@ -56,7 +56,7 @@ Want to add support for a new language? Check out our [Adding a Language Guide](
 
 ### Prerequisites
 
-- PHP 8.2 or higher
+- PHP 8.4 or higher
 - Composer
 
 ### Installation
@@ -73,15 +73,15 @@ composer install
 # Run all tests
 composer test
 
-# Run tests with coverage
-vendor/bin/phpunit --coverage-html build/coverage
+# Run tests with coverage (needs Xdebug)
+composer coverage
 ```
 
 ### Code Style
 
 ```bash
-# Check code style
-composer cs
+# Check code style (PHP-CS-Fixer, dry run)
+composer phpcs
 
 # Fix code style automatically
 composer cs-fix
@@ -93,6 +93,16 @@ composer cs-fix
 composer phpstan
 ```
 
+### Rector
+
+```bash
+# Show the changes Rector would make (must be none)
+composer rector
+
+# Apply them
+composer rector-fix
+```
+
 ### Mutation Testing
 
 ```bash
@@ -102,16 +112,16 @@ composer infection
 ### All Checks
 
 ```bash
-# Run all checks (code style, static analysis, tests)
+# Run all checks (code style, static analysis, Rector, tests)
 composer check
 
-# Run all checks including mutation testing
-composer check-all
+# Mutation testing runs separately
+composer infection
 ```
 
 ## Coding Standards
 
-- Follow **PSR-12** coding standard
+- Follow the **PER** coding style (checked by PHP-CS-Fixer)
 - Use strict types: `declare(strict_types=1);`
 - Add type hints to all parameters and return types
 - Write PHPDoc blocks for classes and methods

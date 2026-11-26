@@ -208,7 +208,7 @@ composer test
 vendor/bin/phpunit tests/Language/EnglishLanguageTest.php
 
 # Run code style check
-composer cs
+composer phpcs
 
 # Run static analysis
 composer phpstan
@@ -264,7 +264,7 @@ Ak to nechcete implementovať sami, môžete [založiť issue so žiadosťou o p
 - [ ] Obsahuje testy špecifické pre jazyk
 - [ ] Testuje skutočné vety
 - [ ] Všetky testy prechádzajú
-- [ ] Kontrola štýlu kódu prechádza (`composer cs`)
+- [ ] Kontrola štýlu kódu prechádza (`composer phpcs`)
 - [ ] Statická analýza prechádza (`composer phpstan`)
 - [ ] README.md je aktualizované
 - [ ] Dokumentácia je aktualizovaná

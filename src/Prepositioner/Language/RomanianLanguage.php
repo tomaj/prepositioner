@@ -6,6 +6,7 @@ namespace Tomaj\Prepositioner\Language;
 
 class RomanianLanguage implements LanguageInterface
 {
+    #[\Override]
     public function prepositions(): array
     {
         return [

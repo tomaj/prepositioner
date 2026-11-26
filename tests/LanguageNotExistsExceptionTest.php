@@ -24,13 +24,12 @@ class LanguageNotExistsExceptionTest extends TestCase
         try {
             throw new LanguageNotExistsException($message);
         } catch (LanguageNotExistsException $e) {
-            self::assertEquals($message, $e->getMessage());
+            self::assertSame($message, $e->getMessage());
         }
     }
 
     public function testExceptionIsException(): void
     {
-        $exception = new LanguageNotExistsException('Test');
-        self::assertInstanceOf(\Exception::class, $exception);
+        self::assertTrue(new \ReflectionClass(LanguageNotExistsException::class)->isSubclassOf(\Exception::class));
     }
 }

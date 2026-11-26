@@ -24,14 +24,17 @@
         }
     ],
     "require": {
-        "php": "^8.2"
+        "php": "^8.4"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.90",
         "infection/infection": "^0.27|^0.28|^0.29",
-        "phpstan/phpstan": "^2.0",
-        "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^10.0|^11.0",
-        "squizlabs/php_codesniffer": "^3.10 || ^4.0"
+        "phpstan/phpstan": "^2.3",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.1",
+        "phpunit/phpunit": "^11.5",
+        "rector/rector": "^2.8"
     },
     "minimum-stability": "stable",
     "autoload": {
@@ -45,29 +48,42 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
-        "cs": "phpcs --standard=PSR12 src tests",
-        "cs-fix": "phpcbf --standard=PSR12 src tests",
-        "phpstan": "phpstan analyse -c phpstan.neon",
-        "infection": "infection --show-mutations --min-msi=95 --min-covered-msi=95",
         "check": [
-            "@cs",
+            "@phpcs",
             "@phpstan",
+            "@rector",
             "@test"
         ],
-        "check-all": [
-            "@check",
-            "@infection"
-        ]
+        "coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --coverage-clover build/logs/clover.xml --coverage-html build/coverage"
+        ],
+        "cs-fix": "php-cs-fixer fix",
+        "infection": [
+            "@putenv XDEBUG_MODE=coverage",
+            "infection --threads=max"
+        ],
+        "phpcs": "php-cs-fixer fix --dry-run --diff --verbose",
+        "phpstan": "phpstan analyse --memory-limit=1G",
+        "phpunit": [
+            "@putenv XDEBUG_MODE=off",
+            "phpunit --no-coverage"
+        ],
+        "rector": "rector --dry-run",
+        "rector-fix": "rector",
+        "test": "@phpunit"
     },
     "scripts-descriptions": {
-        "test": "Run PHPUnit tests",
-        "cs": "Check code style (PSR-12)",
-        "cs-fix": "Fix code style issues",
-        "phpstan": "Run static analysis",
-        "infection": "Run mutation testing",
-        "check": "Run all checks (code style, static analysis, tests)",
-        "check-all": "Run all checks including mutation testing"
+        "check": "Runs code style, PHPStan, Rector and the tests.",
+        "coverage": "Runs the tests with Xdebug coverage (Clover in build/logs, HTML in build/coverage).",
+        "cs-fix": "Fixes the code style with PHP-CS-Fixer.",
+        "infection": "Runs Infection mutation testing (thresholds in infection.json5).",
+        "phpcs": "Checks the code style with PHP-CS-Fixer (dry run).",
+        "phpstan": "Runs PHPStan static analysis.",
+        "phpunit": "Runs the PHPUnit tests without coverage.",
+        "rector": "Shows the changes Rector would make (dry run).",
+        "rector-fix": "Applies Rector changes.",
+        "test": "Runs the PHPUnit tests."
     },
     "config": {
         "allow-plugins": {

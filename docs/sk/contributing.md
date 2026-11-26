@@ -56,7 +56,7 @@ Chcete pridať podporu nového jazyka? Pozrite si návod [Pridanie jazyka](/sk/g
 
 ### Predpoklady
 
-- PHP 8.2 alebo novšie
+- PHP 8.4 alebo novšie
 - Composer
 
 ### Inštalácia
@@ -73,15 +73,15 @@ composer install
 # Run all tests
 composer test
 
-# Run tests with coverage
-vendor/bin/phpunit --coverage-html build/coverage
+# Run tests with coverage (needs Xdebug)
+composer coverage
 ```
 
 ### Štýl kódu
 
 ```bash
-# Check code style
-composer cs
+# Check code style (PHP-CS-Fixer, dry run)
+composer phpcs
 
 # Fix code style automatically
 composer cs-fix
@@ -93,6 +93,16 @@ composer cs-fix
 composer phpstan
 ```
 
+### Rector
+
+```bash
+# Show the changes Rector would make (must be none)
+composer rector
+
+# Apply them
+composer rector-fix
+```
+
 ### Mutačné testovanie
 
 ```bash
@@ -102,16 +112,16 @@ composer infection
 ### Všetky kontroly
 
 ```bash
-# Run all checks (code style, static analysis, tests)
+# Run all checks (code style, static analysis, Rector, tests)
 composer check
 
-# Run all checks including mutation testing
-composer check-all
+# Mutation testing runs separately
+composer infection
 ```
 
 ## Pravidlá písania kódu
 
-- dodržiavajte štandard **PSR-12**,
+- dodržiavajte štýl kódu **PER** (kontroluje ho PHP-CS-Fixer),
 - používajte striktné typy: `declare(strict_types=1);`,
 - uvádzajte typy všetkých parametrov a návratových hodnôt,
 - triedy a metódy dokumentujte blokmi PHPDoc,

@@ -15,7 +15,7 @@ class SlovakLanguageTest extends TestCase
     {
         $slovakLanguage = new SlovakLanguage();
         $result = $slovakLanguage->prepositions();
-        self::assertNotEmpty($result);
+        self::assertNotCount(0, $result);
     }
 
     public function testContainsOneLetterPrepositions(): void
@@ -69,6 +69,6 @@ class SlovakLanguageTest extends TestCase
     {
         $slovakLanguage = new SlovakLanguage();
         $result = $slovakLanguage->prepositions();
-        self::assertIsArray($result);
+        self::assertTrue(array_is_list($result));
     }
 }

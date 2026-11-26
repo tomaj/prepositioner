@@ -15,14 +15,14 @@ class EmptyLanguageTest extends TestCase
     {
         $emptyLanguage = new EmptyLanguage();
         $result = $emptyLanguage->prepositions();
-        self::assertEmpty($result);
+        self::assertCount(0, $result);
     }
 
     public function testReturnsArray(): void
     {
         $emptyLanguage = new EmptyLanguage();
         $result = $emptyLanguage->prepositions();
-        self::assertIsArray($result);
+        self::assertTrue(array_is_list($result));
     }
 
     public function testReturnsEmptyArray(): void
