@@ -56,7 +56,7 @@ Want to add support for a new language? Check out our [Adding a Language Guide](
 
 ### Prerequisites
 
-- PHP 8.2 or higher
+- PHP 8.4 or higher
 - Composer
 
 ### Installation

@@ -27,6 +27,8 @@ Install package via composer:
 $ composer require tomaj/prepositioner
 ```
 
+Requires PHP 8.4 or newer.
+
 Usage
 -----
 

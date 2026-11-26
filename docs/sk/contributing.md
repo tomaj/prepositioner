@@ -56,7 +56,7 @@ Chcete pridať podporu nového jazyka? Pozrite si návod [Pridanie jazyka](/sk/g
 
 ### Predpoklady
 
-- PHP 8.2 alebo novšie
+- PHP 8.4 alebo novšie
 - Composer
 
 ### Inštalácia

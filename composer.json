@@ -24,13 +24,13 @@
         }
     ],
     "require": {
-        "php": "^8.2"
+        "php": "^8.4"
     },
     "require-dev": {
         "infection/infection": "^0.27|^0.28|^0.29",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^10.0|^11.0",
+        "phpunit/phpunit": "^11.5",
         "squizlabs/php_codesniffer": "^3.10 || ^4.0"
     },
     "minimum-stability": "stable",
