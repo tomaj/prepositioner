@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - **BREAKING CHANGE**: Minimum PHP version is now 8.4 ([#21](https://github.com/tomaj/prepositioner/issues/21))
 - Code style is checked with PHP-CS-Fixer (PER-CS + PHP 8.4 migration) instead of PHP_CodeSniffer; PHPStan also analyses the tests with bleeding edge, deprecation and PHPUnit rules; Rector added; Composer scripts renamed to the shared set (`cs` → `phpcs`, new `rector`, `rector-fix`, `phpunit`, `coverage`; `check-all` removed) ([#20](https://github.com/tomaj/prepositioner/issues/20))
+- CI at the shared baseline: separate jobs for the PHP matrix (8.4, 8.4 `--prefer-lowest`, 8.5, 8.6, nightly 8.7), code style, PHPStan, Rector, `composer audit` and Infection; statement coverage ≥ 90 % on PHP 8.6 uploaded to Coveralls (CodeClimate removed); every action pinned to a commit SHA; new `release.yml` (GitHub release with notes from this file, source archives and build provenance), CodeQL and OpenSSF Scorecard workflows; Dependabot weekly with grouped updates, including the docs toolchain ([#19](https://github.com/tomaj/prepositioner/issues/19))
 - CI tests PHP 8.6 and runs PHP 8.7 (nightly) without failing the build; `shivammathur/setup-php` is pinned to a commit
 - Updated the GitHub Actions used by CI and the docs deployment (`actions/checkout` 7, `actions/configure-pages` 6, `actions/upload-pages-artifact` 5, `actions/deploy-pages` 5)
 
