@@ -19,7 +19,7 @@ composer require tomaj/prepositioner
 ```
 
 ::: info Požiadavky
-PHP 8.2 alebo novšie
+PHP 8.4 alebo novšie
 :::
 
 ## Rýchly štart

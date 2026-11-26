@@ -361,7 +361,7 @@ Tomaj\Prepositioner\
 
 ## Kompatibilita s verziami PHP
 
-- vyžaduje **PHP 8.2+** (od verzie 4.0.0),
+- vyžaduje **PHP 8.4+** (od verzie 5.0.0),
 - používa striktné typy: `declare(strict_types=1);`,
 - všetky metódy majú typové deklarácie.
 

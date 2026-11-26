@@ -24,7 +24,7 @@ features:
     title: HTML-Safe Processing
     details: Preserves HTML tags and attributes while processing text content, ensuring your markup stays intact
   - icon: ⚡
-    title: Modern PHP 8.2+
+    title: Modern PHP 8.4+
     details: Leverages modern PHP features with strict typing, comprehensive error handling, and Unicode support
   - icon: 🔧
     title: Easy Integration
