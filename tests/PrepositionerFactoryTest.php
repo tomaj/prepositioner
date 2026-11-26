@@ -26,14 +26,14 @@ class PrepositionerFactoryTest extends TestCase
     public function testCreatePrepositioner(): void
     {
         $prepositioner = Factory::build('empty');
-        self::assertEquals('Tomaj\Prepositioner\Prepositioner', get_class($prepositioner));
+        self::assertEquals(Prepositioner::class, $prepositioner::class);
     }
 
     public function testFactoryThrowExceptionOnUnknownLanguage(): void
     {
         self::expectException(LanguageNotExistsException::class);
         self::expectExceptionMessage(
-            "Language class '\\Tomaj\\Prepositioner\\Language\\NonexistentLanguage' does not exist"
+            "Language class '\\Tomaj\\Prepositioner\\Language\\NonexistentLanguage' does not exist",
         );
         Factory::build('nonexistent');
     }
@@ -41,37 +41,34 @@ class PrepositionerFactoryTest extends TestCase
     public function testFactoryBuildsSlovakLanguage(): void
     {
         $prepositioner = Factory::build('slovak');
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner);
 
-        $input = "a test";
+        $input = 'a test';
         $result = $prepositioner->formatText($input);
-        self::assertEquals("a&nbsp;test", $result);
+        self::assertSame('a&nbsp;test', $result);
     }
 
     public function testFactoryBuildsCzechLanguage(): void
     {
         $prepositioner = Factory::build('czech');
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner);
 
-        $input = "a test";
+        $input = 'a test';
         $result = $prepositioner->formatText($input);
-        self::assertEquals("a&nbsp;test", $result);
+        self::assertSame('a&nbsp;test', $result);
     }
 
     public function testFactoryBuildsRomanianLanguage(): void
     {
         $prepositioner = Factory::build('romanian');
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner);
 
-        $input = "cu test";
+        $input = 'cu test';
         $result = $prepositioner->formatText($input);
-        self::assertEquals("cu&nbsp;test", $result);
+        self::assertSame('cu&nbsp;test', $result);
     }
 
     public function testFactoryWithCustomEscapeString(): void
     {
         $prepositioner = Factory::build('empty', '@@@@');
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner);
+        self::assertSame('v @@@@a@@@@ dome', $prepositioner->formatText('v @@@@a@@@@ dome'));
     }
 
     public function testFactoryCaseInsensitive(): void
@@ -80,9 +77,9 @@ class PrepositionerFactoryTest extends TestCase
         $prepositioner2 = Factory::build('SLOVAK');
         $prepositioner3 = Factory::build('slovak');
 
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner1);
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner2);
-        self::assertInstanceOf('Tomaj\Prepositioner\Prepositioner', $prepositioner3);
+        self::assertSame('v&nbsp;dome', $prepositioner1->formatText('v dome'));
+        self::assertSame('v&nbsp;dome', $prepositioner2->formatText('v dome'));
+        self::assertSame('v&nbsp;dome', $prepositioner3->formatText('v dome'));
     }
 
     public function testFactoryThrowsExceptionForClassNotImplementingInterface(): void
@@ -98,7 +95,7 @@ class InvalidLanguage {
 
         try {
             self::expectException(LanguageNotExistsException::class);
-            self::expectExceptionMessage("must implement LanguageInterface");
+            self::expectExceptionMessage('must implement LanguageInterface');
             Factory::build('invalid');
         } finally {
             // Clean up

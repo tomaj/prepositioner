@@ -102,7 +102,7 @@ The `LanguageTestCase` base class automatically verifies that your language:
 ### Pull Requests
 
 1. Fork the repository and create your branch from `master`
-2. Follow the coding standards (PSR-12)
+2. Follow the coding standards (PER coding style, `composer phpcs`)
 3. Write or update tests as needed
 4. Ensure all tests pass
 5. Run static analysis and code style checks
@@ -142,8 +142,10 @@ composer test
 
 ### Code Style Check
 
+Code style is checked with [PHP-CS-Fixer](https://cs.symfony.com/) (PER-CS + PHP 8.4 migration rules, `.php-cs-fixer.dist.php`):
+
 ```bash
-composer cs
+composer phpcs
 ```
 
 ### Auto-fix Code Style
@@ -154,8 +156,25 @@ composer cs-fix
 
 ### Static Analysis
 
+PHPStan at level max with bleeding edge, strict, deprecation and PHPUnit rules, over `src` and `tests`, without a baseline file:
+
 ```bash
 composer phpstan
+```
+
+### Rector
+
+`rector.php` applies the PHP 8.4 set plus the dead code, code quality and type declaration sets. The dry run must report no changes:
+
+```bash
+composer rector       # dry run
+composer rector-fix   # apply the changes
+```
+
+### Coverage
+
+```bash
+composer coverage     # Clover in build/logs, HTML in build/coverage (needs Xdebug)
 ```
 
 ### Mutation Testing
@@ -175,18 +194,13 @@ Equivalent mutants (quotation mark escaping, error message formatting) are expli
 ### Run All Checks
 
 ```bash
-composer check
-```
-
-### Run All Checks Including Mutation Testing
-
-```bash
-composer check-all
+composer check        # code style, PHPStan, Rector, tests
+composer infection    # mutation testing, run separately
 ```
 
 ## Coding Standards
 
-- Follow PSR-12 coding standard
+- Follow the PER coding style (checked by PHP-CS-Fixer)
 - Use strict types: `declare(strict_types=1);`
 - Add type hints to all parameters and return types
 - Write PHPDoc blocks for classes and methods

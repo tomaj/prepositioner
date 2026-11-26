@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Tomaj\Prepositioner\Factory;
 use Tomaj\Prepositioner\Prepositioner;
+use Tomaj\Prepositioner\PrepositionerException;
 
 #[CoversClass(Prepositioner::class)]
 #[CoversClass(Factory::class)]
@@ -24,22 +25,22 @@ class RobustnessTest extends TestCase
         $prepositioner = Factory::build($language);
 
         $inputs = [
-            "This is a test with prepositions",
-            "Multiple a b c prepositions in a row",
-            "<p>HTML a content with tags</p>",
-            "Quotes \"a test\" and more",
-            "",
-            "Single",
+            'This is a test with prepositions',
+            'Multiple a b c prepositions in a row',
+            '<p>HTML a content with tags</p>',
+            'Quotes "a test" and more',
+            '',
+            'Single',
         ];
 
         foreach ($inputs as $input) {
             $once = $prepositioner->formatText($input);
             $twice = $prepositioner->formatText($once);
 
-            self::assertEquals(
+            self::assertSame(
                 $once,
                 $twice,
-                "Idempotence failed for input: {$input}"
+                "Idempotence failed for input: {$input}",
             );
         }
     }
@@ -54,21 +55,21 @@ class RobustnessTest extends TestCase
         $prepositioner = Factory::build($language);
 
         $inputs = [
-            "Simple text with words",
-            "Multiple    spaces   between words",
-            "<p>HTML content</p>",
+            'Simple text with words',
+            'Multiple    spaces   between words',
+            '<p>HTML content</p>',
             "Text with\nnewlines\nand\ttabs",
-            "Special chars: @#$%^&*()",
+            'Special chars: @#$%^&*()',
         ];
 
         foreach ($inputs as $input) {
             $output = $prepositioner->formatText($input);
             $normalized = str_replace('&nbsp;', ' ', $output);
 
-            self::assertEquals(
+            self::assertSame(
                 $input,
                 $normalized,
-                "Text loss detected for input: {$input}"
+                "Text loss detected for input: {$input}",
             );
         }
     }
@@ -85,9 +86,6 @@ class RobustnessTest extends TestCase
         $longText = implode(' ', array_fill(0, 1000, 'word test content'));
 
         $result = $prepositioner->formatText($longText);
-
-        // Should not throw exception
-        self::assertIsString($result);
 
         // Result should be at least as long as input (may have &nbsp; additions)
         self::assertGreaterThanOrEqual(strlen($longText), strlen($result));
@@ -120,7 +118,7 @@ class RobustnessTest extends TestCase
             self::assertEquals(
                 $inputTags[0],
                 $outputTags[0],
-                "HTML tags/attributes were modified for: {$description}"
+                "HTML tags/attributes were modified for: {$description}",
             );
         }
     }
@@ -141,10 +139,9 @@ class RobustnessTest extends TestCase
 
         foreach ($invalidUtf8Cases as $input) {
             try {
-                $result = $prepositioner->formatText($input);
-                // If no exception, verify result is a string
-                self::assertIsString($result);
-            } catch (\Tomaj\Prepositioner\PrepositionerException $e) {
+                $prepositioner->formatText($input);
+                self::fail('Invalid UTF-8 must throw PrepositionerException');
+            } catch (PrepositionerException $e) {
                 // Exception is acceptable for invalid UTF-8
                 self::assertStringContainsString('preg_replace failed', $e->getMessage());
             }
@@ -162,17 +159,14 @@ class RobustnessTest extends TestCase
         try {
             $result = $prepositioner->formatText($input);
 
-            // Should always return a string
-            self::assertIsString($result);
-
             // Idempotence should hold
             $again = $prepositioner->formatText($result);
-            self::assertEquals($result, $again);
+            self::assertSame($result, $again);
 
             // No text loss (after removing &nbsp;)
             $normalized = str_replace('&nbsp;', ' ', $result);
-            self::assertEquals($input, $normalized);
-        } catch (\Tomaj\Prepositioner\PrepositionerException $e) {
+            self::assertSame($input, $normalized);
+        } catch (PrepositionerException $e) {
             // Only acceptable if input contained invalid UTF-8
             self::assertStringContainsString('preg_replace failed', $e->getMessage());
         }
@@ -186,7 +180,7 @@ class RobustnessTest extends TestCase
     {
         $prepositioner = Factory::build($language);
 
-        self::assertEquals('', $prepositioner->formatText(''));
+        self::assertSame('', $prepositioner->formatText(''));
     }
 
     public static function languageProvider(): array

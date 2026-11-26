@@ -156,10 +156,10 @@ Run tests and code quality checks:
 
 ``` bash
 composer test          # Run PHPUnit tests
-composer cs            # Check coding standards (PSR-12)
+composer phpcs         # Check code style (PHP-CS-Fixer)
 composer cs-fix        # Fix coding standards automatically
 composer phpstan       # Run static analysis
-composer check         # Run all checks (cs, phpstan, test)
+composer check         # Run all checks (phpcs, phpstan, rector, test)
 ```
 
 
